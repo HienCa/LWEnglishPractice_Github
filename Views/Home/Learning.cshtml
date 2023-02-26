@@ -1,0 +1,574 @@
+﻿@model LWEnglishPractice.Entities.Track;
+@using LWEnglishPractice.Entities;
+@{
+    Layout = null;
+    //ListenAndWriteContext context = new ListenAndWriteContext();
+    //List<Lesson> lesson = context.Lesson.Where(a => a.Active == 1).ToList();
+
+    List<Track> trackList = TempData["track"] as List<Track>;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen And Write English</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+
+</head>
+
+
+<body>
+    <div class="row " style="width: 100vw; height: 100vh;">
+        <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center mt-5">
+            <h3>CVG ENGLISH</h3>
+            <div class="">
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+                    <span style="font-size:32px; margin-right: 10px;">
+                        <i style="color: #58CC02;"
+                           class="fa-solid fa-house "></i>
+                    </span>
+                    <a href="/Home/Learning" style="text-decoration: none;" class="text-dark">LEARNING</a>
+                </div>
+
+                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+                    <span style="font-size:32px; margin-right: 10px;">
+                        <i style="color: #58CC02;"
+                           class="fa-solid fa-ranking-star "></i>
+                    </span>
+                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">RANKING</a>
+            </div>
+            <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+                <span style="font-size:32px; margin-right: 20px;">
+                    <i style="color: #58CC02;"
+                       class="fa-solid fa-user "></i>
+                </span>
+                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">PROFILE</a>
+            </div>
+
+        </div>
+        <div class="col-md-7 border border-bottom-0 border-left-0 border-top-0 border-right"
+             style="max-height: 100vh; overflow-y:scroll">
+
+
+            <div id="learning" class="fade">
+                <div class="mt-4 row align-items-center">
+                    <div class="col-md-4 bg  text-white text-center rounded-circle"
+                         style="width: 80px; height: 80px; position: relative; margin-left: 75px;background-color: #58CC02;">
+                        <span style="position:absolute; left: 20px;top:20px">@Model.IdlessonNavigation.IdlevelNavigation.Levelname</span>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class=" ml-2 text-center">
+                                    @Model.IdlessonNavigation.Lessonanme - Part <span id="partOfLesson"> </span>
+                                </h2>
+
+                            </div>
+                            @*<div class="col-md-3">
+                                    <select id="TrackOptions" class=" form-select">
+                                        @foreach (var track in trackList)
+                                        {
+                                            <option value="@track.Idtrack">Part @track.Trackname</option>
+                                        }
+                                    </select>
+                                </div>*@
+                            <form class="d-none" id="SearchTrackForm" asp-action="Learning" asp-controller="Home">
+                                <input class="d-none" name="Idlesson" value="@Model.Idlesson" />
+                                <input class="d-none" name="Idlevel" value="@Model.IdlessonNavigation.Idlevel" />
+                                <input class="d-none" id="Idtrack" name="Idtrack" value="Idtrack" />
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center mt-5">
+                        <div class="">Speed:</div>
+                        <div class="">
+                            <select id="speedOption" class="w-100 form-select">
+                                <option value="1">Chuẩn</option>
+                                <option value="0.25">0.25</option>
+                                <option value="0.5">0.5</option>
+                                <option value="0.75">0.75</option>
+                                <option value="1.25">1.25</option>
+                                <option value="1.5">1.5</option>
+                                <option value="1.75">1.75</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <div class="">Speech:</div>
+                        <div id="microBtn" class="mr-2">
+                            <i class="fas fa-microphone" style="font-size: 24px"></i>
+                        </div>
+                        <div id="stopMicroBtn" class="">
+                            <i class="fas fa-microphone-slash" style="font-size: 24px"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <div class="">Scores:</div>
+                        <div class="mr-2">
+                            <span id="scores" style="font-size: 24px">0</span>
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <div class="">Times:</div>
+                        <div class="mr-2">
+                            <span id="timer" style="font-size: 24px">00:00:00</span>
+                        </div>
+
+                    </div>
+                    @*<div class="">
+                            Hint<span id="hintText" class="mr-2">0%</span>
+                        </div>*@
+                </div>
+                <div class="mt-2">
+                    <p id="audioText" class="bg bg-light boder rounded p-2"></p>
+                    <audio controls loop id="myAudio" class="custom-controls w-100">
+                        @*<source id="Source" src="~/Images/1-1.mp3" type="audio/mpeg">*@
+                        <source id="mySource" src="" type="audio/mpeg">
+                    </audio>
+                    <div class="d-flex justify-content-around mt-2">
+                        <button id="listenBtn" class="btn text-white" style="background-color: #58CC02;">
+                            <span class="mr-2"><i class="fa-solid fa-circle-play"></i></span>
+                            Listen
+                        </button>
+                        <button id="pauseBtn" class="btn text-white" style="background-color: #58CC02; display:none">
+                            <span class="mr-2"><i class="fa-solid fa-pause"></i></span>
+                            Pause
+                        </button>
+                        <button id="hintVisibleBtn" class="btn text-white"
+                                style="background-color: #58CC02;display: none">
+                            <span class="mr-2">
+                                <i class="fa-solid fa-eye"></i>
+                            </span>Hint
+                        </button>
+                        <button id="hintHideBtn" class="btn text-white" style="background-color: #58CC02;">
+                            <span class="mr-2"><i class="fas fa-eye-slash"></i></span>Hint
+                        </button>
+
+                        <button id="retryBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                            <span class="mr-2"><i class="fa-solid fa-rotate-right"></i></span>
+                            Retry
+                        </button>
+                        <button id="backBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                            <span class="mr-2"><i class="fas fa-fast-backward"></i></span>
+                            Back
+                        </button>
+                        <button id="nextBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                            <span class="mr-2"><i class="fa-solid fa-forward-fast"></i></span>
+                            Next
+                        </button>
+                        <button id="restartBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                            <span class="mr-2"><i class="fa-solid fa-eraser"></i></span>
+                            Restart
+                        </button>
+
+                    </div>
+                </div>
+                <p class="mt-2">Write only the first two letters of the word</p>
+                @*<div class="">Score: <span id="score" class="">0</span></div>*@
+                <textarea disabled class="w-100 form-control" name="" id="inputText" cols="30" rows="2" style="min-height: 20px;"
+                          placeholder="Write it down here"></textarea>
+            </div>
+
+
+
+        </div>
+        <div class="col-md-3 mt-5" style="max-height: 100vh; overflow-y:scroll">
+            <h3 class="text-center">RELATED AUDIOS</h3>
+            <div class="row ">
+                <div class="col-md-8 text-center">
+                    TRACK NAME
+                </div>
+
+                <div class="col-md-2">
+                    TIME
+                </div>
+
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 ">
+                    <a href="">
+                        Track 2: What is your name?
+                    </a>
+
+                </div>
+
+                <div class="col-md-2 text-center">
+                    6
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/Js/AudioList.js"></script>
+    <script>
+
+
+
+
+    </script>
+    <script>
+
+
+
+        //display timer
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+        let count = 0;
+        let timerId;
+        let stopped = false;
+
+        function startTimer() {
+            timerId = setInterval(function () {
+                count++;
+               
+                    seconds++;
+                    if (seconds >= 60) {
+                        seconds = 0;
+                        minutes++;
+                        if (minutes >= 60) {
+                            minutes = 0;
+                            hours++;
+                        }
+                    }
+                    let timerDisplay = (hours < 10 ? "0" + hours : hours) + ":" +
+                        (minutes < 10 ? "0" + minutes : minutes) + ":" +
+                        (seconds < 10 ? "0" + seconds : seconds);
+                    document.getElementById("timer").innerText = timerDisplay;
+              
+
+                if (stopped) {
+                    clearInterval(timerId);
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            stopped = true;
+        }
+
+        //change part of lesson
+        //const ChangeTrackName = function () {
+        //    let myValue = TracknameList[currenSourceIndex];
+        //    let select = document.getElementById("TrackOptions");
+        //    for (let i = 0; i < select.options.length; i++) {
+        //        let option = select.options[i];
+        //        if (option.value === myValue) {
+        //            option.selected = true;
+        //            console.log("ok");
+        //            break;
+        //        }
+        //    }
+        //}
+       
+        //button and input
+        const listenBtn = document.getElementById("listenBtn");
+        const pauseBtn = document.getElementById("pauseBtn");
+        const audioSource = document.getElementById("myAudio");
+        const retryBtn = document.getElementById("retryBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const restartBtn = document.getElementById("restartBtn");
+        const speedOption = document.getElementById("speedOption");
+        const inputFocus = document.getElementById("inputText");
+        let audioText = document.getElementById("audioText");
+
+        //load sourceList
+        let myArr =@Html.Raw(ViewBag.CookieValue);
+        const trackList = myArr.map(obj => obj[Object.keys(obj)[2]]);
+        const IdtrackList = myArr.map(obj => obj[Object.keys(obj)[0]]);
+        const TracknameList = myArr.map(obj => obj[Object.keys(obj)[1]]);
+        const DatecreateList = myArr.map(obj => obj[Object.keys(obj)[3]]);
+        const DurationList = myArr.map(obj => obj[Object.keys(obj)[4]]);
+        const DescribeList = myArr.map(obj => obj[Object.keys(obj)[5]]);
+
+        let audio = document.getElementById("myAudio");
+
+        let source = document.getElementById("mySource");
+        let partOfLesson = document.getElementById("partOfLesson");
+
+        let currenSourceIndex = 0;
+
+        //result
+        let x;//tổng thời gian nghe;
+        let y;// thời gian của audio;
+        let scores = 0;
+        const scoreCurrent = document.getElementById("scores");
+        function playNextMusic() {
+
+            currenSourceIndex++;
+
+            if (currenSourceIndex >= trackList.length) {
+
+                //currenSourceIndex = 0; // lặp lại source đầu tiên
+                stopTimer();
+                x = count;
+                y = DurationList.reduce((total, currentValue) => total + currentValue);
+                scores = 10 * (11 - x / y);
+                scoreCurrent.innerText = scores;
+                audioText.innerText = "Finish!";
+                listenBtn.disabled = true;
+                pauseBtn.disabled = true;
+                retryBtn.disabled = true;
+                backBtn.disabled = true;
+                restartBtn.disabled = false;
+
+                source.src = "";
+
+            }
+       
+            if (currenSourceIndex > 0) {
+                backBtn.disabled = false;
+
+            }
+            if (currenSourceIndex >= 0 && count > 0) {
+                nextBtn.disabled = false;
+
+            } else {
+                nextBtn.disabled = true;
+            }
+            
+                 //ChangeTrackName();
+            //reset input
+            inputFocus.value="";
+            inputFocus.disabled = false;
+            inputFocus.focus();
+            //reset audio text
+            audioText = document.getElementById("audioText").innerText.trim();
+
+            partOfLesson.innerText = TracknameList[currenSourceIndex];
+            source.src = "/Images/" + trackList[currenSourceIndex];
+            document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+            audio.load();
+            audio.play();
+
+        }
+        
+        //ChangeTrackName();
+        //Next audio
+  /*      audio.addEventListener('ended', playNextMusic);*/
+
+        partOfLesson.innerText = TracknameList[currenSourceIndex];
+        source.src = "/Images/" + trackList[currenSourceIndex];
+        audioText.innerText = DescribeList[currenSourceIndex];
+
+        audio.load();
+        /*  audio.play();*/
+
+
+        const backBtn = document.getElementById("backBtn");
+
+        backBtn.addEventListener('click', playBackMusic);
+        function playBackMusic() {
+
+            currenSourceIndex--;
+
+            if (currenSourceIndex >= trackList.length) {
+
+                stopTimer();
+                x = count;
+                y = DurationList.reduce((total, currentValue) => total + currentValue);
+                scores = 10 * (11 - x / y);
+                scoreCurrent.innerText = scores;
+                audioText.innerText = "Finish!";
+                listenBtn.disabled = true;
+                pauseBtn.disabled = true;
+                retryBtn.disabled = true;
+                backBtn.disabled = true;
+                source.src = "/Images/" + trackList[0];
+
+            }
+            if (currenSourceIndex == 0) {
+                backBtn.disabled = true;
+            }
+            if (currenSourceIndex == trackList.length -1) {
+                nextBtn.disabled = true;
+                audio.load();
+                listenBtn.disabled = true;
+                inputFocus.disabled = true;
+            }
+            //ChangeTrackName();
+            //reset input
+            inputFocus.value = "";
+            inputFocus.disabled = false;
+            inputFocus.focus();
+            //reset audio text
+            audioText = document.getElementById("audioText").innerText.trim();
+
+            partOfLesson.innerText = TracknameList[currenSourceIndex];
+            source.src = "/Images/" + trackList[currenSourceIndex];
+            document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+            audio.load();
+            audio.play();
+
+        }
+
+      
+
+
+        //Run audio
+        listenBtn.addEventListener("click", function () {
+            inputFocus.disabled = false;
+            inputFocus.focus();
+
+            audioSource.play();
+            listenBtn.style.display = "none";
+            pauseBtn.style.display = "block";
+            retryBtn.disabled = false;
+
+            startTimer();
+        })
+        //Pause audio
+        pauseBtn.addEventListener("click", function () {
+            audioSource.pause();
+            listenBtn.style.display = "block";
+            pauseBtn.style.display = "none";
+            stopTimer();
+        })
+
+        //Choose speed
+        window.addEventListener("load", function () {
+            audioSource.playbackRate = 1;
+
+        })
+        speedOption.addEventListener("change", function () {
+            audioSource.playbackRate = speedOption.value;
+
+        })
+
+        //Retry audio
+       
+        retryBtn.addEventListener("click", function () {
+            audioSource.currentTime = 0;
+            audioSource.play();
+        })
+        //Next audio
+        //const backBtn = document.getElementById("backBtn");
+        nextBtn.addEventListener("click", function () {
+            inputFocus.disabled = false;
+            playNextMusic();
+            inputFocus.focus();
+
+        })
+        //Next audio
+        backBtn.addEventListener("click", function () {
+
+            inputText.disabled = false;
+            inputText.value = "";
+            listenBtn.style.display = "none";
+            pauseBtn.style.display = "block";
+
+        })
+        //Restart test
+        restartBtn.addEventListener("click", function () {
+            //reset scores
+            scores = 0;
+            count = 0;
+            startTimer();
+
+            inputText.disabled = false;
+            inputText.value = "";
+            listenBtn.style.display = "none";
+            pauseBtn.style.display = "block";
+
+            backBtn.disabled = true;
+            retryBtn.disabled = false;
+            pauseBtn.disabled = false;
+            //reset audio
+            currenSourceIndex = 0;;
+            partOfLesson.innerText = TracknameList[currenSourceIndex];
+            source.src = "/Images/" + trackList[currenSourceIndex];
+            document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+            audio.load();
+            audio.play();
+        })
+        //Hint audio
+        function toggleDiv(div) {
+
+            if (div.style.display == "none") {
+                div.style.display = "block";
+            } else {
+                div.style.display = "none";
+            }
+        }
+        
+
+        const hintVisibleBtn = document.getElementById("hintVisibleBtn");
+        hintVisibleBtn.addEventListener("click", function () {
+            const audioText = document.getElementById("audioText");
+            toggleDiv(audioText)
+            hintHideBtn.style.display = "block";
+            hintVisibleBtn.style.display = "none";
+
+
+        })
+        const hintHideBtn = document.getElementById("hintHideBtn");
+        hintHideBtn.addEventListener("click", function () {
+            const audioText = document.getElementById("audioText");
+            toggleDiv(audioText)
+            hintVisibleBtn.style.display = "block";
+            hintHideBtn.style.display = "none";
+
+        })
+        //focus input
+
+        
+
+        //Check typed
+        const inputText = document.getElementById("inputText");
+
+       
+        const checkType = function () {
+            audioText = document.getElementById("audioText").innerText.trim();
+
+            let textTyped = document.getElementById("inputText").value;
+            for (let i = 0; i < textTyped.length; i++) {
+                console.log("audioText:" + audioText[i]);
+                console.log("textTyped:" + textTyped[i]);
+                console.log("audioText:" + audioText);
+                if (audioText[i] === textTyped[i]) {
+                    if (document.getElementById("audioText").innerText.trim() === textTyped) {
+
+                        inputText.disabled = true;
+                        playNextMusic();
+                        backBtn.disabled = false;
+                       
+
+                        break;
+                    }
+                    console.log("T");
+                }
+
+                else {
+                    inputText.value = inputText + textTyped.charAt(inputText.value.length - 1)
+                    inputText.value = textTyped.substring(0, textTyped.length - 1);
+                    console.log("F");
+
+                }
+            }
+        }
+        inputText.addEventListener("input", checkType);
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

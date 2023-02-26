@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="~/Style/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Style/Login.css">
+    <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+    <title>Log in</title>
+</head>
+
+<body>
+    <div id="login" class="wrapper fade" style='display: none;'>
+        <div class="mt-2">
+            <h3 class="text-center">Hello LogIn</h3>
+        </div>
+        <form asp-action="Login" asp-controller="Home" method="post">
+            <input class="d-none" value="login" name="login" />
+
+            <div class="field">
+                <input type="text" name="Email" id="email" required>
+                <label for="email">Email Address</label>
+            </div>
+            <div class="field">
+                <input type="password" name="Password" id="password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="content">
+                <div class="checkbox">
+                    <input type="checkbox" checked name="checkbox" id="checkbox">
+                    <label for="checkbox">Remember me</label>
+                </div>
+                <div class="pass-link">
+                    <a href="/Home/ForgotPassword">Forgot password?</a>
+                </div>
+
+            </div>
+            <div class="field">
+                <input type="submit" value="Login">
+            </div>
+            <div class="signup-link">
+                <div class="link-social">
+                    <p>Or SignUp Using</p>
+                    <div class="icon ">
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-google-plus"></i>
+                    </div>
+                </div>
+                <div class="link-signup">
+                    <p>Or SignUp Using</p>
+                    <button id="btn-signupForward" class="btn border-0 text-primary">Sign Up</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="signup" class="wrapper fade">
+        <div class="mt-2">
+            <h3 class="text-center">Hello SignUp</h3>
+        </div>
+        <form asp-action="Signup" asp-controller="Home" method="post">
+            <input class="d-none" value="signup" name="signup"/>
+            <div class="field">
+                <input type="text" name="Email" id="email" required>
+                <label for="email">Email Address</label>
+            </div>
+            <div class="field">
+                <input type="password" name="Password" id="password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="field">
+                <input type="password" name="password" id="password" required>
+                <label for="password">Retype Password</label>
+            </div>
+
+            <div class="field mt-5">
+                <input type="submit" value="Signup">
+            </div>
+            <div class="text-center">
+                <button type="button" id="btn-loginForward" class="btn border-0 text-primary">Log In</button>
+
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <script>
+        function toggleDiv(div) {
+
+            if (div.style.display == "none") {
+                div.style.display = "block";
+            } else {
+                div.style.display = "none";
+            }
+        }
+        const signupForwardBtn = document.getElementById("btn-signupForward");
+        const loginForwardBtn = document.getElementById("btn-loginForward");
+        const login = document.getElementById("login");
+        const signup = document.getElementById("signup");
+        signupForwardBtn.addEventListener("click", function () {
+            login.style.display="none";
+            signup.style.display="block";
+            document.title="Sign up";
+        });
+        loginForwardBtn.addEventListener("click", function () {
+            login.style.display="block";
+            signup.style.display="none";
+            document.title="Log in";
+
+        })
+    </script>
+</body>
+
+</html>
