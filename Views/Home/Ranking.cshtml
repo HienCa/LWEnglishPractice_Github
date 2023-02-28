@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<LWEnglishPractice.Entities.History>
+@using LWEnglishPractice.Entities;
+@{
+    Layout = null;
+
+    History TopOne = TempData["TopOne"] as History;
+    History TopTwo = TempData["TopTwo"] as History;
+    History TopThree = TempData["TopThree"] as History;
+    List<History> OtherTops = TempData["OtherTops"] as List<History>;
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,7 +18,6 @@
     <title>Listen And Write English</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="~/Style/bootstrap.min.css">
-    <link rel="stylesheet" href="~/Style/Login.css">
     <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
 
 </head>
@@ -24,23 +33,31 @@
                         <i style="color: #58CC02;"
                            class="fa-solid fa-house "></i>
                     </span>
-                    <a href="ListenAndWrite.html" style="text-decoration: none;" class="text-dark">LEARNING</a>
+                    <a href="/Home/Learning" style="text-decoration: none;" class="text-dark">LEARNING</a>
                 </div>
 
-                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0"
-                    style="background-color: #DDF4FF;border: 2px solid #84D8FF;">
+                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0" style="background-color: #DDF4FF;border: 2px solid #84D8FF;">
                     <span style="font-size:32px; margin-right: 10px;">
                         <i style="color: #58CC02;"
                            class="fa-solid fa-ranking-star "></i>
                     </span>
-                    <a href="ranking.html" style="text-decoration: none;" class="text-dark">RANKING</a>
+                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">RANKING</a>
             </div>
             <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
                 <span style="font-size:32px; margin-right: 20px;">
                     <i style="color: #58CC02;"
                        class="fa-solid fa-user "></i>
                 </span>
-                <a href="profile.html" style="text-decoration: none;" class="text-dark">PROFILE</a>
+                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">PROFILE</a>
+            </div>
+            <div class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+
+                <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: #58CC02;" class="fa-solid fa-power-off"></i>
+                    </span>
+                </a>
             </div>
         </div>
         <div class="col-md-10" style="max-height: 100vh; overflow-y:scroll; border-left: 1px solid #ccc;">
@@ -48,7 +65,7 @@
             <div id="ranking" class="fade">
                 <div class="container">
                     <div class="text-center mt-2 mb-2">
-                        <img src="assets/imgs/medal.jpg" alt="goldMedal" style="width:15%;">
+                        <img src="~/Images/medal.jpg" alt="goldMedal" style="width:15%;">
                         <h3>Learning Leaderboard</h3>
                     </div>
                     <div class="row text-center">
@@ -56,92 +73,85 @@
                         <div class="col-md-6">NAME</div>
                         <div class="col-md-3">AVATAR</div>
                     </div>
-                    <div class="row text-center align-items-center mt-3 rounded"
-                         style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #F2B724;">
-                        <div class="col-md-3">
-
-                            <img src="assets/imgs/goldMedal.jpg" alt="goldMedal" style="width:50%;">
-                        </div>
-                        <div class="col-md-6">
-                            Nguyen Van Hien
-                        </div>
-                        <div class="col-md-3">
-                            <img src="assets/imgs/anhVN.jpg" style="width: 50%;" alt="">
-                        </div>
-                    </div>
-                    <div class="row text-center align-items-center mt-3 rounded"
-                         style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #A0A2A3;">
-                        <div class="col-md-3">
-                            <img src="assets/imgs/silverMedal.jpg" alt="goldMedal" style="width:50%;">
-
-                        </div>
-                        <div class="col-md-6">
-                            Nguyen Van Hien
-                        </div>
-                        <div class="col-md-3">
-                            <img src="assets/imgs/anhVN.jpg" style="width: 50%;" alt="">
-                        </div>
-                    </div>
-                    <div class="row text-center align-items-center mt-3 rounded"
-                         style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #CC885C;">
-                        <div class="col-md-3">
-                            <img src="assets/imgs/bronzeMedal.jpg" alt="goldMedal" style="width:50%;">
-
-                        </div>
-                        <div class="col-md-6">
-                            Nguyen Van Hien
-                        </div>
-                        <div class="col-md-3">
-                            <img src="assets/imgs/anhVN.jpg" style="width: 50%;" alt="">
-                        </div>
-
-                    </div>
-                    <div class="p-2" style="max-height: 40vh;overflow-y: scroll;">
-                        <div class="row text-center align-items-center mt-4 rounded"
-                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;max-height: 40vh;overflow-y: scroll;">
-                            <div class="col-md-3">
-                                4
-
-                            </div>
-                            <div class="col-md-6">
-                                Nguyen Van Hien
-                            </div>
-                            <div class="col-md-3">
-                                <img src="assets/imgs/anhVN.jpg" style="width: 50%;" alt="">
-                            </div>
-
-                        </div>
+                    @if (TopOne != null)
+                    {
                         <div class="row text-center align-items-center mt-3 rounded"
-                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;max-height: 40vh;overflow-y: scroll;">
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #F2B724;">
                             <div class="col-md-3">
-                                4
+                                <img src="~/Images/goldMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
                             <div class="col-md-6">
-                                Nguyen Van Hien
+                                @TopOne.IdlearnerNavigation.Fullname
                             </div>
                             <div class="col-md-3">
-                                <img src="assets/imgs/anhVN.jpg" style="width: 50%;" alt="">
+                                <img src="~/Images/@TopOne.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
                             </div>
-
                         </div>
+                    }
+                    @if (TopTwo != null)
+                    {
                         <div class="row text-center align-items-center mt-3 rounded"
-                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;max-height: 40vh;overflow-y: scroll;">
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #A0A2A3;">
                             <div class="col-md-3">
-                                4
+
+                                <img src="~/Images/silverMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
                             <div class="col-md-6">
-                                Nguyen Van Hien
+                                @TopTwo.IdlearnerNavigation.Fullname
                             </div>
                             <div class="col-md-3">
-                                <img src="assets/imgs/anhVN.jpg" style="width: 50%;" alt="">
+                                <img src="~/Images/@TopTwo.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
+                            </div>
+                        </div>
+                    }
+                    @if (TopThree != null)
+                    {
+                        <div class="row text-center align-items-center mt-3 rounded"
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #CC885C;">
+                            <div class="col-md-3">
+
+                                <img src="~/Images/bronzeMedal.jpg" alt="goldMedal" style="width:50%;">
+
+                            </div>
+                            <div class="col-md-6">
+                                @TopThree.IdlearnerNavigation.Fullname
+                            </div>
+                            <div class="col-md-3">
+                                <img src="~/Images/@TopThree.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
                             </div>
 
                         </div>
+                    }
+                    @if (OtherTops != null)
+                    {
+                        int count = 4;
+                        <div class="p-2" style="max-height: 40vh;overflow-y: scroll;">
+                            @foreach (var item in OtherTops)
+                            {
+                                <div class="row text-center align-items-center mt-4 rounded"
+                                     style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;max-height: 40vh;overflow-y: scroll;">
+                                    <div class="col-md-3">
+                                        @count
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        @item.IdlearnerNavigation.Fullname
+                                    </div>
+                                    <div class="col-md-3">
+                                        <img src="~/Images/@item.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
+                                    </div>
+
+                                </div>
+                                count++;
+                            }
+
+                        </div>
+                    }
 
 
-                    </div>
+
                 </div>
 
 

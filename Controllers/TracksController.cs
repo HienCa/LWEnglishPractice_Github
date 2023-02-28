@@ -47,6 +47,7 @@ namespace LWEnglishPractice.Controllers
                     track.Describe = model.Describe;
                     track.Duration = model.Duration;
                     track.Idlesson = model.Idlesson;
+                    track.Dateupload = model.Dateupload;
 
                 }
                 catch
@@ -81,7 +82,7 @@ namespace LWEnglishPractice.Controllers
                     //    track.Source = trackSource.Source;
                     //}
 
-                    _context.Update(track);
+                    _context.Track.Update(track);
 
                 }
                 await _context.SaveChangesAsync();
@@ -90,6 +91,7 @@ namespace LWEnglishPractice.Controllers
             catch
             {
                 return RedirectToAction("Index");
+
 
             }
 

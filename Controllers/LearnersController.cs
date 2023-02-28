@@ -27,7 +27,6 @@ namespace LWEnglishPractice.Controllers
         {
             return View(await _context.Learner.Where(a => a.Active == 1).ToListAsync());
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOrEdit(LearnerViewModel model, string action)
@@ -92,6 +91,62 @@ namespace LWEnglishPractice.Controllers
             catch
             {
                 return RedirectToAction("Index");
+
+            }
+
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPersonalInformation(LearnerViewModel model, string action, string Image)
+        {
+
+            try
+            {
+                string uniqueFileName = UploadedFile(model);
+                Learner learner = new Learner();
+
+                try
+                {
+
+
+                    learner.Idlearner = model.Idlearner;
+                    learner.Fullname = model.Fullname;
+                    learner.Email = model.Email;
+                    learner.Password = model.Password;
+                    learner.Sex = model.Sex;
+                    learner.Dateofbirth = model.Dateofbirth;
+                    learner.Joindate = model.Joindate;
+                    learner.Active = 1;
+
+                }
+                catch
+                {
+                    return RedirectToAction(nameof(Index));
+
+                }
+                if (action.Equals("info"))
+                {
+                    learner.Image = Image;
+
+                    _context.Learner.Update(learner);
+
+                }
+                else if (action.Equals("editAvatar"))
+                {
+                    learner.Image = uniqueFileName;
+
+                    _context.Learner.Update(learner);
+
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Profile", "Home", new { @id = model.Idlearner });
+
+            }
+            catch
+            {
+                return RedirectToAction("Profile","Home", new { @id=model.Idlearner});
 
             }
 

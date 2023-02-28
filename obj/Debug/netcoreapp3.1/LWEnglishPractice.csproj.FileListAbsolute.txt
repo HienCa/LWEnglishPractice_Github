@@ -167,7 +167,6 @@ D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Hist
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Histories\Edit.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Histories\Index.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\Learning.cshtml.g.cs
-D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\Login.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\Profile.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\Ranking.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\Track.cshtml.g.cs
@@ -183,5 +182,11 @@ D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\System.Text.Enco
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Security.Cryptography.Cng.dll
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Text.Encoding.CodePages.dll
-D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\ForgotPassword.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Login\ForgotPassword.cshtml.g.cs
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Login\Login.cshtml.g.cs

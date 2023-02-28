@@ -4,7 +4,11 @@
     ListenAndWriteContext context = new ListenAndWriteContext();
     List<Lesson> lesson = context.Lesson.Where(a => a.Active == 1).ToList();
 }
-
+<style>
+    audio::-webkit-media-controls-play-button {
+        display: block;
+    }
+</style>
 <div class="">
 
     <form asp-action="CreateOrEdit" asp-controller="Tracks" method="post" onsubmit="return onSubmitForm()" enctype="multipart/form-data">
@@ -38,7 +42,7 @@
                             Track Name
                         </div>
                         <div class="col-md-10 col-sm-12">
-                            <textarea name="Trackname" id="Trackname" maxlength="255" onfocus="this.value=''" style="height:14px" type="text" class="form-control"></textarea>
+                            <input name="Trackname" id="Trackname" maxlength="255"  onfocus="this.value=''"  type="number" class="form-control"/>
                             <span id="checkTrackname" class="text-danger"></span>
 
                         </div>
@@ -99,8 +103,9 @@
                             Duration(s)
                         </div>
                         <div class="col-md-8 col-sm-12">
-                            <input name="Duration" id="Duration" onfocus="this.value=''" disabled maxlength="255" type="text" class="form-control">
-                            <span id="checkDescribe" class="text-danger"></span>
+                            <input name="Duration" id="Duration" onfocus="this.value=''"  maxlength="255" type="text" class="form-control">
+                           
+                            <span id="checkDuration" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -170,7 +175,7 @@
                                 <td>@item.IdlessonNavigation.Lessonanme</td>
                                 <td>@item.Trackname</td>
                                 <td>@item.Describe</td>
-                                <td>
+                                <td style="width:200px">
 
                                     <audio controls class="w-100 p-2">
                                         <source id="SourceEdit" src="~/Images/@item.Source" class=" " asp-append-version="true" />
@@ -269,7 +274,7 @@
 
         let errorMessage = "Vui lòng cung cấp thông tin!";
 
-        if (Duration.length == 0) {
+        if (Duration.length == 0 && Duration <= 0) {
             checkDuration.innerText = errorMessage;
 
         }
@@ -314,56 +319,27 @@
     })
 
 
-    function onEdit(td) {
-        document.getElementById("Dateupload").disabled = false;
-        selectedRow = td.parentElement.parentElement;
-        document.getElementById("Trackname").value = selectedRow.cells[1].innerHTML;
-        document.getElementById("Describe").value = selectedRow.cells[2].innerHTML;
-        //document.getElementById("Source").value = selectedRow.cells[3].innerHTML;
-        document.getElementById("Duration").value = selectedRow.cells[5].innerHTML;
-        if (selectedRow.cells[7].innerHTML != "") {
-            var Datecreate = selectedRow.cells[7].innerHTML;
-            document.getElementById("Dateupload").value = Datecreate;
-        }
-        document.querySelector(".Idlesson").value = selectedRow.cells[7].innerHTML;
-        document.getElementById("Idtrack").value = selectedRow.cells[8].innerHTML;
-
-        //audioSource.src = selectedRow.cells[3].querySelector("audio#SourceEdit").src;
-        //audio.load();
-        //setTimeout(() => {
-        //    document.getElementById("Duration").value = Math.round(document.getElementById('audio').duration);
-
-        //}, 100);
-
-        btnAdd.style.display = "none";
-        btnUpdate.style.display = "block";
-        btnCancel.style.display = "block";
-
-    }
-    btnUpdate.addEventListener("click", function () {
-        btnAdd.style.display = "block";
-        btnUpdate.style.display = "none";
-        btnCancel.style.display = "none";
-
-    })
+    
 </script>
 <script>
     const audioInput = document.getElementById('Source');
     const audioSource = document.getElementById('ShowSource');
     const audio = document.getElementById('audio');
-
+    let timeout;
     audioInput.addEventListener('change', function () {
         const file = this.files[0];
         const objectURL = URL.createObjectURL(file);
         audioSource.src = objectURL;
         audio.load();
-        setTimeout(() => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
             document.getElementById("Duration").value = Math.round(document.getElementById('audio').duration);
 
-        }, 100);
+        }, 500);
     });
 
 </script>
+<script src="~/Js/AudioList.js"></script>
 @*<script>
         const Dateupload = document.getElementById('Dateupload');
 

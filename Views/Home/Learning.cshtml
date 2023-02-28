@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="~/Style/bootstrap.min.css">
     <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
 
+
 </head>
 
 
@@ -49,137 +50,291 @@
                     <i style="color: #58CC02;"
                        class="fa-solid fa-user "></i>
                 </span>
-                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">PROFILE</a>
+                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">PROIFILE</a>
             </div>
+            <div class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
 
+                <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: #58CC02;" class="fa-solid fa-power-off"></i>
+                    </span>
+                </a>
+            </div>
         </div>
         <div class="col-md-7 border border-bottom-0 border-left-0 border-top-0 border-right"
              style="max-height: 100vh; overflow-y:scroll">
 
 
             <div id="learning" class="fade">
-                <div class="mt-4 row align-items-center">
-                    <div class="col-md-4 bg  text-white text-center rounded-circle"
-                         style="width: 80px; height: 80px; position: relative; margin-left: 75px;background-color: #58CC02;">
-                        <span style="position:absolute; left: 20px;top:20px">@Model.IdlessonNavigation.IdlevelNavigation.Levelname</span>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h2 class=" ml-2 text-center">
-                                    @Model.IdlessonNavigation.Lessonanme - Part <span id="partOfLesson"> </span>
-                                </h2>
+                @if (Model != null)
+                {
+                    <div class="mt-4 row align-items-center">
+                        <div class="col-md-4 bg  text-white text-center rounded-circle"
+                             style="width: 80px; height: 80px; position: relative; margin-left: 75px;background-color: #58CC02;">
+                            <span style="position:absolute; left: 15px;top:25px">@Model.IdlessonNavigation.IdlevelNavigation.Levelname</span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2 class=" ml-2 text-center">
+                                        @Model.IdlessonNavigation.Lessonanme - Part <span id="partOfLesson"> </span>
+                                    </h2>
 
+                                </div>
+                                @*<div class="col-md-3">
+                                        <select id="TrackOptions" class=" form-select">
+                                            @foreach (var track in trackList)
+                                            {
+                                                <option value="@track.Idtrack">Part @track.Trackname</option>
+                                            }
+                                        </select>
+                                    </div>*@
+                                <form class="d-none" id="SearchTrackForm" asp-action="Learning" asp-controller="Home">
+                                    <input class="d-none" name="Idlesson" value="@Model.Idlesson" />
+                                    <input class="d-none" name="Idlevel" value="@Model.IdlessonNavigation.Idlevel" />
+                                    <input class="d-none" id="Idtrack" name="Idtrack" value="Idtrack" />
+                                </form>
                             </div>
-                            @*<div class="col-md-3">
-                                    <select id="TrackOptions" class=" form-select">
-                                        @foreach (var track in trackList)
-                                        {
-                                            <option value="@track.Idtrack">Part @track.Trackname</option>
-                                        }
-                                    </select>
-                                </div>*@
-                            <form class="d-none" id="SearchTrackForm" asp-action="Learning" asp-controller="Home">
-                                <input class="d-none" name="Idlesson" value="@Model.Idlesson" />
-                                <input class="d-none" name="Idlevel" value="@Model.IdlessonNavigation.Idlevel" />
-                                <input class="d-none" id="Idtrack" name="Idtrack" value="Idtrack" />
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center mt-5">
+                            <div class="">Speed:</div>
+                            <div class="">
+                                <select id="speedOption" class="w-100 form-select">
+                                    <option value="1">Chuẩn</option>
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Speech:</div>
+                            <div id="microBtn" class="mr-2">
+                                <i class="fas fa-microphone" style="font-size: 24px"></i>
+                            </div>
+                            <div id="stopMicroBtn" class="">
+                                <i class="fas fa-microphone-slash" style="font-size: 24px"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Scores:</div>
+                            <div class="mr-2">
+                                <span id="scores" style="font-size: 24px">0</span>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <form asp-action="CreateOrEdit" asp-controller="Histories">
+                                <input type="hidden" name="Idlesson" value="@Model.Idlesson" />
+                                <input type="hidden" name="Score" value="" id="Score" />
+                                <input type="hidden" name="Finishtime" value="" id="Finishtime" />
+                                <button type="submit" class="border-0 btn" disabled id="saveHistoryBtn"><i class="fas fa-save" style="font-size: 36px;"></i></button>
                             </form>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Times:</div>
+                            <div class="mr-2">
+                                <span id="timer" style="font-size: 24px">00:00:00</span>
+                            </div>
+
+                        </div>
+                        @*<div class="">
+                                Hint<span id="hintText" class="mr-2">0%</span>
+                            </div>*@
+                    </div>
+                    <div class="mt-2">
+                        <p id="audioText" class="bg bg-light boder rounded p-2"></p>
+                        <audio controls loop id="myAudio" class="custom-controls w-100">
+                            @*<source id="Source" src="~/Images/1-1.mp3" type="audio/mpeg">*@
+                            <source id="mySource" src="" type="audio/mpeg">
+                        </audio>
+                        <div class="d-flex justify-content-around mt-2">
+                            <button id="listenBtn" class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-circle-play"></i></span>
+                                Listen
+                            </button>
+                            <button id="pauseBtn" class="btn text-white" style="background-color: #58CC02; display:none">
+                                <span class="mr-2"><i class="fa-solid fa-pause"></i></span>
+                                Pause
+                            </button>
+                            <button id="hintVisibleBtn" class="btn text-white"
+                                    style="background-color: #58CC02;display: none">
+                                <span class="mr-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>Hint
+                            </button>
+                            <button id="hintHideBtn" class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-eye-slash"></i></span>Hint
+                            </button>
+
+                            <button id="retryBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-rotate-right"></i></span>
+                                Retry
+                            </button>
+                            <button id="backBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-fast-backward"></i></span>
+                                Back
+                            </button>
+                            <button id="nextBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-forward-fast"></i></span>
+                                Next
+                            </button>
+                            <button id="restartBtn" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-eraser"></i></span>
+                                Restart
+                            </button>
+
                         </div>
                     </div>
+                    <p class="mt-2">Listen and write the words you hear below</p>
+                    @*<div class="">Score: <span id="score" class="">0</span></div>*@
+                    <textarea disabled class="w-100 form-control" name="" id="inputText" cols="30" rows="2" style="min-height: 20px;"
+                              placeholder="Write it down here"></textarea>
+                }
+                else
+                {
+                    <div class="mt-4 row align-items-center">
+                        <div class="col-md-4 bg  text-white text-center rounded-circle"
+                             style="width: 80px; height: 80px; position: relative; margin-left: 75px;background-color: #58CC02;">
+                            <span style="position:absolute; left: 15px;top:25px"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2 class=" ml-2 text-center">
+                                        There are currently no tracks <span id=""> </span>
+                                    </h2>
 
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center mt-5">
-                        <div class="">Speed:</div>
-                        <div class="">
-                            <select id="speedOption" class="w-100 form-select">
-                                <option value="1">Chuẩn</option>
-                                <option value="0.25">0.25</option>
-                                <option value="0.5">0.5</option>
-                                <option value="0.75">0.75</option>
-                                <option value="1.25">1.25</option>
-                                <option value="1.5">1.5</option>
-                                <option value="1.75">1.75</option>
-                                <option value="2">2</option>
-                            </select>
+                                </div>
+                                @*<div class="col-md-3">
+                                        <select id="TrackOptions" class=" form-select">
+                                            @foreach (var track in trackList)
+                                            {
+                                                <option value="@track.Idtrack">Part @track.Trackname</option>
+                                            }
+                                        </select>
+                                    </div>*@
+                                <form class="d-none" id="" asp-action="Learning" asp-controller="Home">
+                                    <input class="d-none" name="" value="" />
+                                    <input class="d-none" name="" value="" />
+                                    <input class="d-none" id="" name="Idtrack" value="" />
+                                </form>
+                            </div>
                         </div>
 
                     </div>
-                    <div class="d-flex justify-content-between align-items-center mt-5">
-                        <div class="">Speech:</div>
-                        <div id="microBtn" class="mr-2">
-                            <i class="fas fa-microphone" style="font-size: 24px"></i>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center mt-5">
+                            <div class="">Speed:</div>
+                            <div class="">
+                                <select id="" class="w-100 form-select">
+                                    <option value="1">Chuẩn</option>
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.75">0.75</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="1.75">1.75</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+
                         </div>
-                        <div id="stopMicroBtn" class="">
-                            <i class="fas fa-microphone-slash" style="font-size: 24px"></i>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Speech:</div>
+                            <div id="" class="mr-2">
+                                <i class="fas fa-microphone" style="font-size: 24px"></i>
+                            </div>
+                            <div id="" class="">
+                                <i class="fas fa-microphone-slash" style="font-size: 24px"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Scores:</div>
+                            <div class="mr-2">
+                                <span id="" style="font-size: 24px">0</span>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <form asp-action="CreateOrEdit" asp-controller="Histories">
+                                <input type="hidden" name="Idlesson" value="" /> @*do not have track*@
+                                <input type="hidden" name="Score" value="" id="" />
+                                <input type="hidden" name="Finishtime" value="" id="" />
+                                <button type="submit" class="border-0 btn" disabled id=""><i class="fas fa-save" style="font-size: 36px;"></i></button>
+                            </form>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-5">
+                            <div class="">Times:</div>
+                            <div class="mr-2">
+                                <span id="" style="font-size: 24px">00:00:00</span>
+                            </div>
+
+                        </div>
+                        @*<div class="">
+                                Hint<span id="hintText" class="mr-2">0%</span>
+                            </div>*@
+                    </div>
+                    <div class="mt-2">
+                        <p id="" class="bg bg-light boder rounded p-2"></p>
+                        <audio controls loop id="" class="custom-controls w-100">
+                            <source id="mySource" src="" type="audio/mpeg">
+                        </audio>
+                        <div class="d-flex  justify-content-around mt-2">
+                            <button disabled id="" class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-circle-play"></i></span>
+                                Listen
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02; display:none">
+                                <span class="mr-2"><i class="fa-solid fa-pause"></i></span>
+                                Pause
+                            </button>
+                            <button disabled id="" class="btn text-white"
+                                    style="background-color: #58CC02;display: none">
+                                <span class="mr-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>Hint
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-eye-slash"></i></span>Hint
+                            </button>
+
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-rotate-right"></i></span>
+                                Retry
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fas fa-fast-backward"></i></span>
+                                Back
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-forward-fast"></i></span>
+                                Next
+                            </button>
+                            <button id="" disabled class="btn text-white" style="background-color: #58CC02;">
+                                <span class="mr-2"><i class="fa-solid fa-eraser"></i></span>
+                                Restart
+                            </button>
+
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center mt-5">
-                        <div class="">Scores:</div>
-                        <div class="mr-2">
-                            <span id="scores" style="font-size: 24px">0</span>
-                        </div>
+                    <p class="mt-2">Listen and write the words you hear below</p>
+                    @*<div class="">Score: <span id="score" class="">0</span></div>*@
+                    <textarea disabled class="w-100 form-control" name="" id="" cols="30" rows="2" style="min-height: 20px;"
+                              placeholder="Write it down here"></textarea>
+                }
 
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-5">
-                        <div class="">Times:</div>
-                        <div class="mr-2">
-                            <span id="timer" style="font-size: 24px">00:00:00</span>
-                        </div>
-
-                    </div>
-                    @*<div class="">
-                            Hint<span id="hintText" class="mr-2">0%</span>
-                        </div>*@
-                </div>
-                <div class="mt-2">
-                    <p id="audioText" class="bg bg-light boder rounded p-2"></p>
-                    <audio controls loop id="myAudio" class="custom-controls w-100">
-                        @*<source id="Source" src="~/Images/1-1.mp3" type="audio/mpeg">*@
-                        <source id="mySource" src="" type="audio/mpeg">
-                    </audio>
-                    <div class="d-flex justify-content-around mt-2">
-                        <button id="listenBtn" class="btn text-white" style="background-color: #58CC02;">
-                            <span class="mr-2"><i class="fa-solid fa-circle-play"></i></span>
-                            Listen
-                        </button>
-                        <button id="pauseBtn" class="btn text-white" style="background-color: #58CC02; display:none">
-                            <span class="mr-2"><i class="fa-solid fa-pause"></i></span>
-                            Pause
-                        </button>
-                        <button id="hintVisibleBtn" class="btn text-white"
-                                style="background-color: #58CC02;display: none">
-                            <span class="mr-2">
-                                <i class="fa-solid fa-eye"></i>
-                            </span>Hint
-                        </button>
-                        <button id="hintHideBtn" class="btn text-white" style="background-color: #58CC02;">
-                            <span class="mr-2"><i class="fas fa-eye-slash"></i></span>Hint
-                        </button>
-
-                        <button id="retryBtn" disabled class="btn text-white" style="background-color: #58CC02;">
-                            <span class="mr-2"><i class="fa-solid fa-rotate-right"></i></span>
-                            Retry
-                        </button>
-                        <button id="backBtn" disabled class="btn text-white" style="background-color: #58CC02;">
-                            <span class="mr-2"><i class="fas fa-fast-backward"></i></span>
-                            Back
-                        </button>
-                        <button id="nextBtn" disabled class="btn text-white" style="background-color: #58CC02;">
-                            <span class="mr-2"><i class="fa-solid fa-forward-fast"></i></span>
-                            Next
-                        </button>
-                        <button id="restartBtn" disabled class="btn text-white" style="background-color: #58CC02;">
-                            <span class="mr-2"><i class="fa-solid fa-eraser"></i></span>
-                            Restart
-                        </button>
-
-                    </div>
-                </div>
-                <p class="mt-2">Write only the first two letters of the word</p>
-                @*<div class="">Score: <span id="score" class="">0</span></div>*@
-                <textarea disabled class="w-100 form-control" name="" id="inputText" cols="30" rows="2" style="min-height: 20px;"
-                          placeholder="Write it down here"></textarea>
             </div>
 
 
@@ -214,7 +369,7 @@
         </div>
     </div>
 
-    <script src="~/Js/AudioList.js"></script>
+    @*<script src="~/Js/AudioList.js"></script>*@
     <script>
 
 
@@ -233,10 +388,11 @@
         let timerId;
         let stopped = false;
 
+        let timerDisplay = "00:00:00";
         function startTimer() {
             timerId = setInterval(function () {
                 count++;
-               
+
                     seconds++;
                     if (seconds >= 60) {
                         seconds = 0;
@@ -246,22 +402,20 @@
                             hours++;
                         }
                     }
-                    let timerDisplay = (hours < 10 ? "0" + hours : hours) + ":" +
+                     timerDisplay = (hours < 10 ? "0" + hours : hours) + ":" +
                         (minutes < 10 ? "0" + minutes : minutes) + ":" +
                         (seconds < 10 ? "0" + seconds : seconds);
                     document.getElementById("timer").innerText = timerDisplay;
-              
 
-                if (stopped) {
-                    clearInterval(timerId);
-                }
+                //if (stopped) {
+                //    clearInterval(timerId);
+                //}
+
             }, 1000);
         }
-
-        function stopTimer() {
-            stopped = true;
-        }
-
+        //function stopTimer() {
+        //    stopped = true;
+        //}
         //change part of lesson
         //const ChangeTrackName = function () {
         //    let myValue = TracknameList[currenSourceIndex];
@@ -275,7 +429,7 @@
         //        }
         //    }
         //}
-       
+
         //button and input
         const listenBtn = document.getElementById("listenBtn");
         const pauseBtn = document.getElementById("pauseBtn");
@@ -307,41 +461,61 @@
         let x;//tổng thời gian nghe;
         let y;// thời gian của audio;
         let scores = 0;
-        const scoreCurrent = document.getElementById("scores");
+        let scoreCurrent = document.getElementById("scores");
         function playNextMusic() {
 
             currenSourceIndex++;
 
             if (currenSourceIndex >= trackList.length) {
 
-                //currenSourceIndex = 0; // lặp lại source đầu tiên
-                stopTimer();
+
+                clearInterval(timerId);
                 x = count;
                 y = DurationList.reduce((total, currentValue) => total + currentValue);
+                console.log("x"+x);
+                console.log("y"+y);
                 scores = 10 * (11 - x / y);
-                scoreCurrent.innerText = scores;
+
+                //save history into database
+                document.getElementById("Score").value = Math.round(scores);
+                document.getElementById("Finishtime").value = x;
+                document.getElementById("saveHistoryBtn").disabled = false;
+                document.getElementById("saveHistoryBtn").style.color = "#58CC02";
+                //show client browser
+                scoreCurrent.innerText = Math.round(scores);
+
+
                 audioText.innerText = "Finish!";
+                document.getElementById("partOfLesson").innerText = TracknameList[trackList.length - 1];
                 listenBtn.disabled = true;
                 pauseBtn.disabled = true;
                 retryBtn.disabled = true;
                 backBtn.disabled = true;
                 restartBtn.disabled = false;
+                inputFocus.disabled = true;
 
-                source.src = "";
+                source.src = "/Images/" + trackList[0];
 
             }
-       
-            if (currenSourceIndex > 0) {
+
+            if(currenSourceIndex == trackList.length - 1) {
+                nextBtn.disabled = true;
+                listenBtn.disabled = true;
+
+                console.log("currenSourceIndex" + currenSourceIndex);
+                console.log("trackList" + (trackList.length - 1));
+            }
+            if (currenSourceIndex > 0 && !(currenSourceIndex >= trackList.length)) {
                 backBtn.disabled = false;
 
             }
-            if (currenSourceIndex >= 0 && count > 0) {
+            if (currenSourceIndex == 0 && count > 0) {
                 nextBtn.disabled = false;
 
-            } else {
-                nextBtn.disabled = true;
-            }
-            
+            }/* else {*/
+            //    nextBtn.disabled = true;
+            //}
+
                  //ChangeTrackName();
             //reset input
             inputFocus.value="";
@@ -357,7 +531,7 @@
             audio.play();
 
         }
-        
+
         //ChangeTrackName();
         //Next audio
   /*      audio.addEventListener('ended', playNextMusic);*/
@@ -379,7 +553,6 @@
 
             if (currenSourceIndex >= trackList.length) {
 
-                stopTimer();
                 x = count;
                 y = DurationList.reduce((total, currentValue) => total + currentValue);
                 scores = 10 * (11 - x / y);
@@ -395,12 +568,7 @@
             if (currenSourceIndex == 0) {
                 backBtn.disabled = true;
             }
-            if (currenSourceIndex == trackList.length -1) {
-                nextBtn.disabled = true;
-                audio.load();
-                listenBtn.disabled = true;
-                inputFocus.disabled = true;
-            }
+
             //ChangeTrackName();
             //reset input
             inputFocus.value = "";
@@ -417,9 +585,9 @@
 
         }
 
-      
 
 
+        let flag = true;
         //Run audio
         listenBtn.addEventListener("click", function () {
             inputFocus.disabled = false;
@@ -429,15 +597,18 @@
             listenBtn.style.display = "none";
             pauseBtn.style.display = "block";
             retryBtn.disabled = false;
-
-            startTimer();
+            if (flag) {
+                startTimer();
+                flag = false;
+            }
         })
         //Pause audio
         pauseBtn.addEventListener("click", function () {
             audioSource.pause();
             listenBtn.style.display = "block";
             pauseBtn.style.display = "none";
-            stopTimer();
+            listenBtn.disabled = false;
+
         })
 
         //Choose speed
@@ -451,7 +622,7 @@
         })
 
         //Retry audio
-       
+
         retryBtn.addEventListener("click", function () {
             audioSource.currentTime = 0;
             audioSource.play();
@@ -464,21 +635,33 @@
             inputFocus.focus();
 
         })
-        //Next audio
+        //Back audio
         backBtn.addEventListener("click", function () {
 
             inputText.disabled = false;
             inputText.value = "";
             listenBtn.style.display = "none";
             pauseBtn.style.display = "block";
-
+            pauseBtn.disabled = false;
+            retryBtn.disabled = false;
+            if (currenSourceIndex == 0 || (currenSourceIndex < trackList.length -1)) {
+                nextBtn.disabled = false;
+            }
         })
         //Restart test
         restartBtn.addEventListener("click", function () {
             //reset scores
+            scoreCurrent.innerText = 0;
             scores = 0;
             count = 0;
+            seconds = 0;
+            console.log("scores" + scores);
+            console.log("count" + count);
+            console.log("timer" + timer);
+            timerDisplay = "00:00:00";
+            clearInterval(timerId);
             startTimer();
+
 
             inputText.disabled = false;
             inputText.value = "";
@@ -505,7 +688,7 @@
                 div.style.display = "none";
             }
         }
-        
+
 
         const hintVisibleBtn = document.getElementById("hintVisibleBtn");
         hintVisibleBtn.addEventListener("click", function () {
@@ -526,27 +709,27 @@
         })
         //focus input
 
-        
+
 
         //Check typed
         const inputText = document.getElementById("inputText");
 
-       
-        const checkType = function () {
-            audioText = document.getElementById("audioText").innerText.trim();
 
-            let textTyped = document.getElementById("inputText").value;
+        const checkType = function () {
+            audioText = document.getElementById("audioText").innerText.trim().toLowerCase();
+
+            let textTyped = document.getElementById("inputText").value.toLowerCase();
             for (let i = 0; i < textTyped.length; i++) {
                 console.log("audioText:" + audioText[i]);
                 console.log("textTyped:" + textTyped[i]);
                 console.log("audioText:" + audioText);
                 if (audioText[i] === textTyped[i]) {
-                    if (document.getElementById("audioText").innerText.trim() === textTyped) {
+                    if (audioText === textTyped) {
 
                         inputText.disabled = true;
                         playNextMusic();
                         backBtn.disabled = false;
-                       
+
 
                         break;
                     }

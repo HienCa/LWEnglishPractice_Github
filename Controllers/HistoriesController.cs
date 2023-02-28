@@ -30,19 +30,35 @@ namespace LWEnglishPractice.Controllers
         {
             try
             {
-                if (action.Equals("addItem"))
+                string employeeEmail = Request.Cookies["HienCaCookie"];
+                Learner learner = _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefault();
+
+                history.Idlearner = learner.Idlearner;
+                history.Finishdate = DateTime.Now;
+
+                if (learner == null)
                 {
-
-                    _context.Add(history);
-
+                    return RedirectToAction("Login", "Login");
                 }
-                else if(action.Equals("editItem"))
+                else
                 {
-                    _context.Update(history);
+                    History h = _context.History.Where(l => l.Idlesson == history.Idlesson).Where(l => l.Idlearner == learner.Idlearner).FirstOrDefault();
+                    if (h == null)
+                    {
+                        history.Idhistory = 0;
 
+                        _context.Add(history);
+
+                    }
+                    else if (h != null)
+                    {
+                        _context.Update(history);
+
+                    }
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Learning","Home", new {@id=history.Idlesson });
                 }
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+
             }
             catch
             {
@@ -184,7 +200,7 @@ namespace LWEnglishPractice.Controllers
             return View(history);
         }
 
-       
+
 
         private bool HistoryExists(int id)
         {

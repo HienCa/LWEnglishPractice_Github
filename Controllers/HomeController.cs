@@ -14,7 +14,8 @@ using QuanLySanXuat.Service;
 using QuanLySanXuat.Entities;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Identity;
+using LWEnglishPractice.Models;
 
 namespace LWEnglishPractice.Controllers
 {
@@ -25,12 +26,13 @@ namespace LWEnglishPractice.Controllers
         public HomeController(ListenAndWriteContext context)
         {
             _context = context;
+
         }
         public async Task<IActionResult> Learning(int id, Track track)
         {
 
-            
-           
+
+
             List<Track> mytrack = await _context.Track.Where(a => a.Idlesson == id).Include(l => l.IdlessonNavigation).Include(l => l.IdlessonNavigation.IdlevelNavigation).ToListAsync();
             TempData["track"] = mytrack;
             var settings = new JsonSerializerSettings
@@ -42,10 +44,107 @@ namespace LWEnglishPractice.Controllers
             return View(await _context.Track.Where(a => a.Idlesson == id).Include(l => l.IdlessonNavigation).Include(l => l.IdlessonNavigation.IdlevelNavigation).FirstOrDefaultAsync());
 
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Profile()
         {
-            var listenAndWriteContext = _context.Lesson.Include(l => l.IdlevelNavigation);
-            return View(await listenAndWriteContext.Where(a => a.Active == 1).ToListAsync());
+
+            string employeeEmail = Request.Cookies["HienCaCookie"];
+            Learner learner = await _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefaultAsync();
+
+            if (learner == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                return View(learner);
+            }
+
+        }
+        public async Task<IActionResult> Ranking()
+        {
+
+            string employeeEmail = Request.Cookies["HienCaCookie"];
+            Learner learner = await _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefaultAsync();
+
+
+            var ranking = _context.Learner
+    .SelectMany(l => l.History, (l, h) => new { Learner = l, History = h })
+    .Join(_context.Lesson, lh => lh.History.Idlesson, l => l.Idlesson, (lh, l) => new { Learner = lh.Learner, Lesson = l, Score = lh.History.Score })
+    .GroupBy(x => new { x.Learner.Idlearner, x.Learner.Fullname, x.Learner.Sex, x.Learner.Image })
+    .Select(g => new
+    {
+        Fullname = g.Key.Fullname,
+        Sex = g.Key.Sex,
+        Image = g.Key.Image,
+        Scores = g.Sum(x => x.Score),
+
+    })
+    .OrderByDescending(x => x.Scores)
+    .ToList();
+            List<History> rankedResult = new List<History>();
+            foreach (var item in ranking)
+            {
+                History h = new History();
+                h.IdlearnerNavigation = new Learner();
+                h.IdlearnerNavigation.Fullname = item.Fullname;
+                h.IdlearnerNavigation.Sex = item.Sex;
+                h.IdlearnerNavigation.Image = item.Image;
+                h.Score = item.Scores;
+                rankedResult.Add(h);
+            }
+            if (rankedResult.Count >= 1)
+            {
+                TempData["TopOne"] = rankedResult[0];
+
+            }
+            if (rankedResult.Count >= 2)
+            {
+                TempData["TopTwo"] = rankedResult[1];
+
+            }
+            if (rankedResult.Count >= 3)
+            {
+                TempData["TopThree"] = rankedResult[2];
+
+            }
+            if (rankedResult.Count >= 4)
+            {
+                List<History> OtherTops = new List<History>();
+
+                foreach (var item in ranking.GetRange(3, ranking.Count - 3))
+                {
+                    History h = new History();
+                    h.IdlearnerNavigation = new Learner();
+                    h.IdlearnerNavigation.Fullname = item.Fullname;
+                    h.IdlearnerNavigation.Sex = item.Sex;
+                    h.IdlearnerNavigation.Image = item.Image;
+                    OtherTops.Add(h);
+                }
+                TempData["OtherTops"] = OtherTops;
+
+            }
+
+
+            return View(rankedResult);
+
+
+        }
+        public async Task<IActionResult> Index(int? id)
+        {
+            if (id != null)
+            {
+
+                var listenAndWriteContext = await _context.Lesson.Where(a => a.Active == 1).Include(l => l.IdlevelNavigation).Where(a => a.IdlevelNavigation.Level1.Equals(id)).ToListAsync();
+
+                return View(listenAndWriteContext);
+
+            }
+            else
+            {
+                var listenAndWriteContext = _context.Lesson.Include(l => l.IdlevelNavigation);
+                return View(await listenAndWriteContext.Where(a => a.Active == 1).ToListAsync());
+            }
+
         }
         //public IActionResult Index()
         //{
@@ -59,8 +158,13 @@ namespace LWEnglishPractice.Controllers
         //}
         public async Task<IActionResult> Logout()
         {
+            if (Request.Cookies["HienCaCookie"] != null)
+            {
+                Response.Cookies.Delete("HienCaCookie");
+
+            }
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction(nameof(Login));
+            return RedirectToAction("Login", "Login");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
