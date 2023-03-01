@@ -34,6 +34,8 @@ namespace LWEnglishPractice.Controllers
 
 
             List<Track> mytrack = await _context.Track.Where(a => a.Idlesson == id).Include(l => l.IdlessonNavigation).Include(l => l.IdlessonNavigation.IdlevelNavigation).ToListAsync();
+            Track getLevel = await _context.Track.Where(a => a.Idlesson == id).Include(l => l.IdlessonNavigation).Include(l => l.IdlessonNavigation.IdlevelNavigation).FirstOrDefaultAsync();
+            TempData["LevelLesson"] = getLevel;// get level of the lesson
             TempData["track"] = mytrack;
             var settings = new JsonSerializerSettings
             {
@@ -41,6 +43,7 @@ namespace LWEnglishPractice.Controllers
                 Formatting = Formatting.Indented
             };
             ViewBag.CookieValue = JsonConvert.SerializeObject(mytrack, settings);
+            //ViewBag.LevelLesson = JsonConvert.SerializeObject(mytrack., settings);
             return View(await _context.Track.Where(a => a.Idlesson == id).Include(l => l.IdlessonNavigation).Include(l => l.IdlessonNavigation.IdlevelNavigation).FirstOrDefaultAsync());
 
         }

@@ -6,6 +6,7 @@
     //List<Lesson> lesson = context.Lesson.Where(a => a.Active == 1).ToList();
 
     List<Track> trackList = TempData["track"] as List<Track>;
+    Track track = TempData["LevelLesson"] as Track;
 }
 
 
@@ -20,49 +21,64 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="~/Style/bootstrap.min.css">
     <link rel="stylesheet" href="~/Style/ListenAndWrite.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 </head>
 
 
 <body>
+    @if (track != null)
+    {
+        <input type="hidden" value="@track.IdlessonNavigation.IdlevelNavigation.Level1" id="levelLesson" />
+
+    }
     <div class="row " style="width: 100vw; height: 100vh;">
         <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center mt-5">
             <h3>CVG ENGLISH</h3>
             <div class="">
-                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
-                    <span style="font-size:32px; margin-right: 10px;">
-                        <i style="color: #58CC02;"
-                           class="fa-solid fa-house "></i>
-                    </span>
-                    <a href="/Home/Learning" style="text-decoration: none;" class="text-dark">LEARNING</a>
+                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-house "></i>
+                        </span> LEARNING
+                    </a>
                 </div>
 
-                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
-                    <span style="font-size:32px; margin-right: 10px;">
+                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 10px;">
+                            <i style="color: #58CC02;"
+                               class="fa-solid fa-ranking-star "></i>
+                        </span> RANKING
+
+                    </a>
+            </div>
+            <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
                         <i style="color: #58CC02;"
-                           class="fa-solid fa-ranking-star "></i>
-                    </span>
-                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">RANKING</a>
+                           class="fa-solid fa-user "></i>
+                    </span> PROIFILE
+                </a>
             </div>
-            <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
-                <span style="font-size:32px; margin-right: 20px;">
-                    <i style="color: #58CC02;"
-                       class="fa-solid fa-user "></i>
-                </span>
-                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">PROIFILE</a>
-            </div>
-            <div class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0">
+            <div class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
 
                 <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
                     <span style="font-size:32px; margin-right: 20px;">
 
-                        <i style="color: #58CC02;" class="fa-solid fa-power-off"></i>
-                    </span>
+                        <i style="color: red;" class="fa-solid fa-power-off"></i>
+                    </span> LOG OUT
                 </a>
             </div>
         </div>
-        <div class="col-md-7 border border-bottom-0 border-left-0 border-top-0 border-right"
+        <div class="col-md-10 pb-5 border border-bottom-0 border-left-0 border-top-0 border-right"
              style="max-height: 100vh; overflow-y:scroll">
 
 
@@ -153,6 +169,16 @@
                             </div>*@
                     </div>
                     <div class="mt-2">
+                        @*//chart*@
+                        <canvas id="linechart" class="w-100" style="max-height: 50vh;"></canvas>
+                    </div>
+                    <div class="mt-2">
+                        @if (track.IdlessonNavigation.IdlevelNavigation.Level1 == 1)
+                        {
+                            <input type="text" disabled id="correctWord" class="form-control">
+
+                        }
+
                         <p id="audioText" class="bg bg-light boder rounded p-2"></p>
                         <audio controls loop id="myAudio" class="custom-controls w-100">
                             @*<source id="Source" src="~/Images/1-1.mp3" type="audio/mpeg">*@
@@ -340,33 +366,33 @@
 
 
         </div>
-        <div class="col-md-3 mt-5" style="max-height: 100vh; overflow-y:scroll">
-            <h3 class="text-center">RELATED AUDIOS</h3>
-            <div class="row ">
-                <div class="col-md-8 text-center">
-                    TRACK NAME
-                </div>
+        @*<div class="col-md-3 mt-5" style="max-height: 100vh; overflow-y:scroll">
+                <h3 class="text-center">RELATED AUDIOS</h3>
+                <div class="row ">
+                    <div class="col-md-8 text-center">
+                        TRACK NAME
+                    </div>
 
-                <div class="col-md-2">
-                    TIME
-                </div>
-
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-8 ">
-                    <a href="">
-                        Track 2: What is your name?
-                    </a>
+                    <div class="col-md-2">
+                        TIME
+                    </div>
 
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-8 ">
+                        <a href="">
+                            Track 2: What is your name?
+                        </a>
 
-                <div class="col-md-2 text-center">
-                    6
+                    </div>
+
+                    <div class="col-md-2 text-center">
+                        6
+                    </div>
+
                 </div>
 
-            </div>
-
-        </div>
+            </div>*@
     </div>
 
     @*<script src="~/Js/AudioList.js"></script>*@
@@ -413,22 +439,6 @@
 
             }, 1000);
         }
-        //function stopTimer() {
-        //    stopped = true;
-        //}
-        //change part of lesson
-        //const ChangeTrackName = function () {
-        //    let myValue = TracknameList[currenSourceIndex];
-        //    let select = document.getElementById("TrackOptions");
-        //    for (let i = 0; i < select.options.length; i++) {
-        //        let option = select.options[i];
-        //        if (option.value === myValue) {
-        //            option.selected = true;
-        //            console.log("ok");
-        //            break;
-        //        }
-        //    }
-        //}
 
         //button and input
         const listenBtn = document.getElementById("listenBtn");
@@ -637,7 +647,10 @@
         })
         //Back audio
         backBtn.addEventListener("click", function () {
-
+            const levelLesson = document.getElementById("levelLesson").value;
+            if (levelLesson == 1) {
+                document.getElementById("correctWord").value = "";
+            }
             inputText.disabled = false;
             inputText.value = "";
             listenBtn.style.display = "none";
@@ -650,6 +663,10 @@
         })
         //Restart test
         restartBtn.addEventListener("click", function () {
+            const levelLesson = document.getElementById("levelLesson").value;
+            if (levelLesson == 1) {
+                document.getElementById("correctWord").value = "";
+            }
             //reset scores
             scoreCurrent.innerText = 0;
             scores = 0;
@@ -713,45 +730,135 @@
 
         //Check typed
         const inputText = document.getElementById("inputText");
+        //LEVEL OF THE LESSON
+        const levelLesson = document.getElementById("levelLesson").value;
+        if (levelLesson == 2) {
 
+        }
+        else if (levelLesson == 1) {
+            // người dùng chỉ cần nhập 3 ký tự đầu tiên thì hệ thống sẽ hoàn thành nguyên từ, người dùng sẽ nhập tiếp 3 từ tiếp theo, cứ tiếp tục cho đến hết.
+            function checkInput() {
+                audioText = document.getElementById("audioText").innerText.trim().toLowerCase();
+                let success = [];
+                let lyrics = audioText; // lyrics need compare
+                let arrLength = lyrics.trim().split(" ").length;
 
-        const checkType = function () {
-            audioText = document.getElementById("audioText").innerText.trim().toLowerCase();
+                let word = lyrics; // lyrics need compare
+                let count = 0; // Khởi tạo biến đếm
 
-            let textTyped = document.getElementById("inputText").value.toLowerCase();
-            for (let i = 0; i < textTyped.length; i++) {
-                console.log("audioText:" + audioText[i]);
-                console.log("textTyped:" + textTyped[i]);
-                console.log("audioText:" + audioText);
-                if (audioText[i] === textTyped[i]) {
-                    if (audioText === textTyped) {
+                var input = document.getElementById("inputText").value.toLowerCase().trim(); // Get input value and convert to lower case
 
+                let splitWord = word.split(" ");
+                let arr = Array.from(splitWord);
+                arr.forEach(element => {
+                    console.log("count: " + count);
+                    console.log("arr.length: " + arrLength);
+
+                    // Compare the first 3 letters of the word with the first 3 letters in the input
+                    if (element.substring(0, 3) === input.substring(0, 3)) {
+                        // Nếu khớp, xóa giá trị input
+                        let wordList = document.getElementById("correctWord").value;
+                        wordList = wordList + element;
+                        document.getElementById("correctWord").value = wordList + " ";
+                        // Nếu tất cả các chữ cái đều khớp, in ra thông báo
+                        success.push(element + "");
+
+                        document.getElementById("inputText").value = "";
+                        word = word.substring(word.indexOf(" ") + 1);
+                        count++; // Tăng biến đếm lên 1
+
+                    }
+                    if (count === arrLength) { // Nếu biến đếm bằng độ dài của mảng arr
+                        /*document.getElementById("inputText").disabled = true;*/ // Dừng lại bằng cách disable input
                         inputText.disabled = true;
                         playNextMusic();
                         backBtn.disabled = false;
 
-
-                        break;
                     }
-                    console.log("T");
-                }
+                })
+            }
+            inputText.addEventListener("input", checkInput);
+        }
+        else if (levelLesson == 3) {
+            //LEVEL 3 - VERY HARD - Learners must enter each word correctly.
+            // người học phải nhập đúng từng ký tự trong bài nghe.
+            const checkType = function () {
+                audioText = document.getElementById("audioText").innerText.trim().toLowerCase();
 
-                else {
-                    inputText.value = inputText + textTyped.charAt(inputText.value.length - 1)
-                    inputText.value = textTyped.substring(0, textTyped.length - 1);
-                    console.log("F");
+                let textTyped = document.getElementById("inputText").value.toLowerCase();
+                for (let i = 0; i < textTyped.length; i++) {
+                    console.log("audioText:" + audioText[i]);
+                    console.log("textTyped:" + textTyped[i]);
+                    console.log("audioText:" + audioText);
+                    if (audioText[i] === textTyped[i]) {
+                        if (audioText === textTyped) {
 
+                            inputText.disabled = true;
+                            playNextMusic();
+                            backBtn.disabled = false;
+
+
+                            break;
+                        }
+                        console.log("T");
+                    }
+
+                    else {
+                        inputText.value = inputText + textTyped.charAt(inputText.value.length - 1)
+                        inputText.value = textTyped.substring(0, textTyped.length - 1);
+                        console.log("F");
+
+                    }
                 }
             }
+            //need to re-edit. This is level 3 -very hard
+            inputText.addEventListener("input", checkType);
         }
-        inputText.addEventListener("input", checkType);
 
 
 
 
 
     </script>
+    <script>
+        //line chart
+        let chartX = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+        let chartYB = [5, 10, 2, 6, 14, 15, 6, 2, 4, 13, 19, 3, 7, 8, 6, 1, 9, 16, 14, 4, 12, 10];
+        let chartYC = [3, 7, 8, 6, 1, 9, 16, 14, 4, 12, 10, 5, 10, 2, 6, 14, 15, 6, 2, 4, 13, 19];
+        let chartYD = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2];
+        let chart = document.getElementById("linechart").getContext("2d");
+        let line_chart = new Chart(chart, {
+            type: 'line',
+            data: {
+                labels: chartX,
+                datasets: [
+                    {
+                        label: 'Number of times listening to audio',
+                        borderColor: 'blue',
+                        backgroundColor: 'blue',
+                        data: chartYB,
+                        tension: 0.4,
+                    },
+                    {
+                        label: 'Playback number',
+                        borderColor: 'red',
+                        backgroundColor: 'red',
+                        data: chartYC,
+                        tension: 0.4,
+                    }
+                    ,
+                    {
+                        label: 'Misheard',
+                        borderColor: 'yellow',
+                        backgroundColor: 'yellow',
+                        data: chartYD,
+                        tension: 0.4,
+                    }
+                ]
+            }
+        })
 
+    </script>
 </body>
 
 </html>
