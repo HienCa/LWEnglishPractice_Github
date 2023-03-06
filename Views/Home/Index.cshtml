@@ -78,13 +78,14 @@
                                      style="background-color: #58CC02; border-radius: 10px; position: relative;">
                                     <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
                                         <h5>Lesson Name: @item.Lessonanme</h5>
-                                        <p>Describe: @item.Describe</p>
+                                        <p style="margin-bottom:0">Describe: @item.Describe</p>
+                                        <p>Level: @item.IdlevelNavigation.Level1</p>
                                         @if (item.Datecreate != null)
                                         {
                                             DateTime Datecreate = (DateTime)item.Datecreate;
                                             <span class="  text-center pl-2 pr-2"
                                                   style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
-                                                <i class="fas fa-clock"></i> @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
                                             </span>
                                         }
 
