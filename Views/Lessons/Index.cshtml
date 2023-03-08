@@ -120,33 +120,34 @@
                         </tr>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@item.IdlevelNavigation.Levelname</td>
-                                <td>@item.Lessonanme</td>
-                                <td>@item.Describe</td>
-                                
-                                @if (item.Datecreate != null)
-                                {
-                                    DateTime Datecreate = (DateTime)item.Datecreate;
-                                    <td>@Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</td>
-                                    <td class="d-none">@Datecreate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                    <td></td>
-                                }
-                                <td class="d-none">@item.Idlesson</td>
+                    <tr>
+                        <td>@item.IdlevelNavigation.Levelname</td>
+                        <td>@item.Lessonanme</td>
+                        <td>@item.Describe</td>
+
+                        @if (item.Datecreate != null)
+                        {
+                            DateTime Datecreate = (DateTime)item.Datecreate;
+                            <td>@Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</td>
+                            <td class="d-none">@Datecreate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                        }
+                        <td class="d-none">@item.Idlesson</td>
+                        <td class="d-none">@item.Idlevel</td>
 
 
-                                <td class="table-td-center d-flex">
-                                    <a class="btn  btn-sm btn-warning " onclick="onEdit(this)"><i class="fas fa-edit text-white"></i></a>
-                                    <form class="formDelete" asp-action="Delete" asp-route-id="@item.Idlesson" asp-controller="Lessons">
-                                        <button type="submit" class="btn  btn-sm btn-danger "><i class="fas fa-trash text-white"></i></button>
-                                    </form>
+                        <td class="table-td-center d-flex">
+                            <a class="btn  btn-sm btn-warning " onclick="onEdit(this)"><i class="fas fa-edit text-white"></i></a>
+                            <form class="formDelete" asp-action="Delete" asp-route-id="@item.Idlesson" asp-controller="Lessons">
+                                <button type="submit" class="btn  btn-sm btn-danger "><i class="fas fa-trash text-white"></i></button>
+                            </form>
 
-                                </td>
-                            </tr>
+                        </td>
+                    </tr>
                         }
 
                     </tbody>
@@ -257,7 +258,8 @@
             document.getElementById("Datecreate").value = Datecreate;
         }
         document.getElementById("Idlesson").value = selectedRow.cells[5].innerHTML;
-
+        document.querySelector(".Idlevel").value = selectedRow.cells[6].innerHTML;
+        document.querySelector(".vscomp-value").innerText = selectedRow.cells[0].innerHTML;
       
 
         btnAdd.style.display = "none";

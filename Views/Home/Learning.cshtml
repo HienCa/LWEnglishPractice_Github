@@ -487,9 +487,11 @@
             if (intervalId) {
                 clearInterval(intervalId);
                 intervalId = null;
+                counter = 0;
                 //document.getElementById('start-stop-button').textContent = 'Start';
             } else {
                 intervalId = setInterval(function () {
+                    
                     counter++;
                     seconds++;
                     if (seconds >= 60) {
@@ -549,12 +551,12 @@
 
 
                 /*clearInterval(timerId);*/
-                startStopTimer();
-                x = count;
+                x = counter;
                 y = DurationList.reduce((total, currentValue) => total + currentValue);
                 console.log("x"+x);
                 console.log("y"+y);
                 scores = 10 * (11 - x / y);
+                startStopTimer();
 
                 // draw score chart
 
@@ -1074,7 +1076,7 @@
                         }
                         ,
                         {
-                            label: 'Retry',
+                            label: 'Hint',
                             borderColor: 'green',
                             backgroundColor: 'green',
                             data: chartHint,
@@ -1100,7 +1102,13 @@
             //}
             if (audio.currentTime === 0 && !audio.paused && audio.loop) {
                 Count_Audio_End++;
-                chartAudioEnd.push(Count_Audio_End);
+                if (chartAudioEnd.length == 0) {
+                    chartAudioEnd.push(Count_Audio_End);
+
+                }
+                else {
+                    chartAudioEnd[0] = Count_Audio_End;
+                }
                 line_chart.destroy();
                 createChart();
                 console.log("Looped " + Count_Audio_End + " times.");
@@ -1110,34 +1118,55 @@
 
         pauseBtn.addEventListener("click", function () {
             Count_Audio_Pause++;
-            if (Count_Audio_Pause <= 20) {
+            //if (Count_Audio_Pause <= 20) {
+            //    chartAudioPause.push(Count_Audio_Pause);
+            if (chartAudioPause.length == 0) {
                 chartAudioPause.push(Count_Audio_Pause);
+
+            }
+            else {
+                chartAudioPause[0] = Count_Audio_Pause;
+            }
                 line_chart.destroy();
                 createChart();
                 console.log("pauseaudio :" + Count_Audio_Pause)
-            }
+            /*}*/
 
 
         });
         retryBtn.addEventListener("click", function () {
             Count_Audio_Retry++;
-            if (Count_Audio_Pause <= 20) {
+            //if (Count_Audio_Pause <= 20) {
+            //    chartAudioRetry.push(Count_Audio_Retry);
+            if (chartAudioRetry.length == 0) {
                 chartAudioRetry.push(Count_Audio_Retry);
+
+            }
+            else {
+                chartAudioRetry[0] = Count_Audio_Retry;
+            }
                 line_chart.destroy();
                 createChart();
                 console.log("retyaudio :" + Count_Audio_Retry)
-            }
+           /* }*/
 
 
         });
         hintVisibleBtn.addEventListener("click", function () {
             Count_Audio_Hint++;
-            if (Count_Audio_Pause <= 20) {
+            //if (Count_Audio_Pause <= 20) {
+            //    chartHint.push(Count_Audio_Hint);
+            if (chartHint.length == 0) {
                 chartHint.push(Count_Audio_Hint);
+
+            }
+            else {
+                chartHint[0] = Count_Audio_Hint;
+            }
                 line_chart.destroy();
                 createChart();
                 console.log("retyaudio :" + Count_Audio_Hint)
-            }
+           /* }*/
 
 
         });
@@ -1177,13 +1206,52 @@
 
                     //vẽ lại chart
                     Count_Audio_Pause++;
-                    chartAudioPause.push(Count_Audio_Pause);
+                    chartAudioPause[0] = Count_Audio_Pause;
+                   /* chartAudioPause.push(Count_Audio_Pause);*/
                     line_chart.destroy();
                     createChart();
                 }
 
             } else if (event.ctrlKey && event.code === "KeyM") {
                 audio.muted = !audio.muted;
+            }
+            else if (event.ctrlKey && event.code === "KeyZ") {
+                const levelLesson = document.getElementById("levelLesson").value;
+                //if (levelLesson == 1) {
+                //    document.getElementById("correctWord").value = "";
+                //}
+                if (levelLesson == 2 || levelLesson == 3) {
+                    document.getElementById("correctWord").value = "";
+                }
+                //reset scores
+                scoreCurrent.innerText = 0;
+                scores = 0;
+                count = 0;
+                seconds = 0;
+                console.log("scores" + scores);
+                console.log("count" + count);
+                console.log("timer" + timer);
+                timerDisplay = "00:00:00";
+                clearInterval(timerId);
+                //startTimer();
+                startStopTimer();
+                inputText.disabled = false;
+                inputText.value = "";
+                inputText.focus();
+
+                listenBtn.style.display = "none";
+                pauseBtn.style.display = "block";
+
+                backBtn.disabled = true;
+                retryBtn.disabled = false;
+                pauseBtn.disabled = false;
+                //reset audio
+                currenSourceIndex = 0;;
+                partOfLesson.innerText = TracknameList[currenSourceIndex];
+                source.src = "/Images/" + trackList[currenSourceIndex];
+                document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
+                audio.load();
+                audio.play();
             }
         });
     </script>

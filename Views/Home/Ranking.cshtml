@@ -72,12 +72,13 @@
             <div id="ranking" class="fade">
                 <div class="container">
                     <div class="text-center mt-2 mb-2">
-                        <img src="~/Images/medal.jpg" alt="goldMedal" style="width:15%;">
-                        <h3>Learning Leaderboard</h3>
+                        @*<img src="~/Images/medal.jpg" alt="goldMedal" style="width:15%;">*@
+                        <h3>LEARNING LEADERBOARD</h3>
                     </div>
                     <div class="row text-center">
                         <div class="col-md-3">RANK</div>
-                        <div class="col-md-6">NAME</div>
+                        <div class="col-md-2">SCORES</div>
+                        <div class="col-md-4">NAME</div>
                         <div class="col-md-3">AVATAR</div>
                     </div>
                     @if (TopOne != null)
@@ -88,7 +89,10 @@
                                 <img src="~/Images/goldMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
+                                @TopOne.Score
+                            </div>
+                            <div class="col-md-4">
                                 @TopOne.IdlearnerNavigation.Fullname
                             </div>
                             <div class="col-md-3">
@@ -105,7 +109,10 @@
                                 <img src="~/Images/silverMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
+                                @TopTwo.Score
+                            </div>
+                            <div class="col-md-4">
                                 @TopTwo.IdlearnerNavigation.Fullname
                             </div>
                             <div class="col-md-3">
@@ -122,9 +129,13 @@
                                 <img src="~/Images/bronzeMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
+                                @TopThree.Score
+                            </div>
+                            <div class="col-md-4">
                                 @TopThree.IdlearnerNavigation.Fullname
                             </div>
+
                             <div class="col-md-3">
                                 <img src="~/Images/@TopThree.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
                             </div>
@@ -143,9 +154,13 @@
                                         @count
 
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        @item.Score
+                                    </div>
+                                    <div class="col-md-4">
                                         @item.IdlearnerNavigation.Fullname
                                     </div>
+
                                     <div class="col-md-3">
                                         <img src="~/Images/@item.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
                                     </div>
@@ -184,7 +199,7 @@
         const profile = document.getElementById("profile");
 
         window.addEventListener("load", function () {
-            home.style.display = "block";
+            homeBtn.style.display = "block";
             homeBtn.style.backgroundColor = "#DDF4FF";
             homeBtn.style.border = "2px solid #84D8FF";
 

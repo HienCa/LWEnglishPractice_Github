@@ -33,8 +33,7 @@ namespace LWEnglishPractice.Controllers
                 string employeeEmail = Request.Cookies["HienCaCookie"];
                 Learner learner = _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefault();
 
-                history.Idlearner = learner.Idlearner;
-                history.Finishdate = DateTime.Now;
+               
 
                 if (learner == null)
                 {
@@ -42,6 +41,8 @@ namespace LWEnglishPractice.Controllers
                 }
                 else
                 {
+                    history.Idlearner = learner.Idlearner;
+                    history.Finishdate = DateTime.Now;
                     History h = _context.History.Where(l => l.Idlesson == history.Idlesson).Where(l => l.Idlearner == learner.Idlearner).FirstOrDefault();
                     if (h == null)
                     {

@@ -9,9 +9,12 @@
         var Datecreate = selectedRow.cells[7].innerHTML;
         document.getElementById("Dateupload").value = Datecreate;
     }
-    document.querySelector(".Idlesson").value = selectedRow.cells[7].innerHTML;
-    document.getElementById("Idtrack").value = selectedRow.cells[8].innerHTML;
+    document.getElementById("Dateupload").value = selectedRow.cells[7].innerHTML;
 
+    document.querySelector(".Idlesson").value = selectedRow.cells[8].innerHTML;
+    document.getElementById("Idtrack").value = selectedRow.cells[9].innerHTML;
+
+    document.querySelector(".vscomp-value").innerText = selectedRow.cells[0].innerHTML;
     //audioSource.src = selectedRow.cells[3].querySelector("audio#SourceEdit").src;
     //audio.load();
     //setTimeout(() => {
