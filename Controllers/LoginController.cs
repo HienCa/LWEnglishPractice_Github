@@ -182,7 +182,7 @@ namespace LWEnglishPractice.Controllers
 
 
         }
-        public IActionResult ForgotPassword()
+        public IActionResult GetPassword()
         {
             return View();
         }
@@ -196,7 +196,7 @@ namespace LWEnglishPractice.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> ForgotPasswordAsync(Account account)
+        public async Task<IActionResult> GetPassword(Account account)
         {
 
             var newPassword = GenerateToken(12);
@@ -205,7 +205,7 @@ namespace LWEnglishPractice.Controllers
 
             try
             {
-                Learner learner = await _context.Learner.Where(e => e.Email.Equals(account.Email)).Where(e => e.Password.Equals(account.Password)).FirstOrDefaultAsync();
+                Learner learner = await _context.Learner.Where(e => e.Email.Equals(account.Email)).FirstOrDefaultAsync();
 
 
                 string message = "";
@@ -226,7 +226,7 @@ namespace LWEnglishPractice.Controllers
                 {
                     ViewData["errorMessage"] = errorMessage;
                 }
-                mailContent.Body = "<h1>From HienCa Production</h1><br/>" + message;
+                mailContent.Body = "<h1>From: Listen And Write </h1><br/>" + message;
 
                 //sendmail(từ mail, đến mail, tiêu đề, nội dung, mail gửi, mật khẩu ứng dụng)
 

@@ -207,10 +207,12 @@
                         <form id="secondForm" asp-action="EditPersonalInformation" asp-controller="Learners" onsubmit="return secondForm()">
                             <input type="hidden" name="Idlearner" value="@Model.Idlearner" class="form-control">
                             <input type="hidden" name="Email" value="@Model.Email" class="form-control">
-                            <input type="hidden" id="Password" name="Password" value="@Model.Password" class="form-control">
+                            <input type="hidden" id="Password"  value="@Model.Password" class="form-control">
                             <input type="hidden" name="Joindate" value="@Model.Joindate" class="form-control">
                             <input type="hidden" name="Image" value="@Model.Image" class="form-control">
                             <input type="hidden" name="Sex" value="@Model.Sex" class="form-control">
+                            <input type="hidden" name="Dateofbirth" value="@Model.Dateofbirth" class="form-control">
+                            <input type="hidden" name="Fullname" value="@Model.Fullname" class="form-control">
                             <input type="hidden" name="action" value="info" class="form-control">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
@@ -321,7 +323,7 @@
         };
         const secondForm = function () {
             let issubmit = false;
-            const CurrentPassword = document.getElementById("CurrentPassword").value;
+            const CurrentPassword = document.getElementById("currentPassword").value;
             const NewPassword = document.getElementById("newPassword").value;
             const Password = document.getElementById("Password").value;
             if (CurrentPassword.length < 8) {

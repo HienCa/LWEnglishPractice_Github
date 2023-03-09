@@ -491,7 +491,7 @@
                 //document.getElementById('start-stop-button').textContent = 'Start';
             } else {
                 intervalId = setInterval(function () {
-                    
+
                     counter++;
                     seconds++;
                     if (seconds >= 60) {
@@ -537,7 +537,7 @@
 
         let currenSourceIndex = 0;
         let chartLessonScore = [];
-
+        let resetChart = true;
         //result
         let x;//tổng thời gian nghe;
         let y;// thời gian của audio;
@@ -561,6 +561,11 @@
                 // draw score chart
 
                 chartLessonScore.push(Math.round(scores));
+                //Count_Audio_Pause = 0;
+                //Count_Audio_End = 0;
+                //Count_Audio_Hint = 0;
+                //Count_Audio_Retry = 0;
+
                 line_chart.destroy();
                 createChart();
                 //console.log("scores :" + scores)
@@ -694,6 +699,11 @@
             //    flag = false;
             //}
             startStopTimer();
+            if (resetChart) {
+                chartAudioPause.push(Count_Audio_Pause);
+                chartAudioRetry.push(Count_Audio_Retry);
+                chartHint.push(Count_Audio_Hint);
+            }
         })
         //Pause audio
         pauseBtn.addEventListener("click", function () {
@@ -721,10 +731,10 @@
 
         //Retry audio
 
-        retryBtn.addEventListener("click", function () {
-            audioSource.currentTime = 0;
-            audioSource.play();
-        })
+        //retryBtn.addEventListener("click", function () {
+        //    audioSource.currentTime = 0;
+        //    audioSource.play();
+        //})
         //Next audio
         //const backBtn = document.getElementById("backBtn");
         nextBtn.addEventListener("click", function () {
@@ -787,6 +797,17 @@
             document.getElementById("audioText").innerText = DescribeList[currenSourceIndex];
             audio.load();
             audio.play();
+
+
+
+            resetChart = true;
+            Count_Audio_Pause = 0;
+            Count_Audio_End = 0;
+            Count_Audio_Hint = 0;
+            Count_Audio_Retry = 0;
+            chartAudioPause.push(Count_Audio_Pause);
+            chartAudioRetry.push(Count_Audio_Retry);
+            chartHint.push(Count_Audio_Hint);
         })
         //Hint audio
         function toggleDiv(div) {
@@ -877,7 +898,7 @@
             let currentIndex = 0;
             const input = document.getElementById('inputText');
             let countList = 0;
-            input.addEventListener('input', function () {
+            input.addEventListener('keyup', function () {
                 audioText = document.getElementById("audioText").innerText.trim();
                 let words = audioText.trim().split(" ");
                 for (let i = 0; i < words.length; i++) {
@@ -913,7 +934,10 @@
                     }
                 } else {
                     document.getElementById('wrongWord').value = inputValue;
-
+                }
+                if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, currentWord.length-1))) {
+                    input.value = "";
+                    console.log("tttttt")
                 }
             });
 
@@ -961,7 +985,12 @@
 
                 } else {
                     document.getElementById('wrongWord').value = inputValue;
+                    //input.value = "";
 
+                }
+                if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, currentWord.length - 1))) {
+                    input.value = "";
+                    console.log("tttttt")
                 }
             });
 
@@ -1092,81 +1121,90 @@
 
 
         audio.addEventListener("timeupdate", function () {
-            //Count_Audio_End++;
-            //if (Count_Audio_End <= 20) {
-            //    chartAudioEnd.push(Count_Audio_End);
-            //    line_chart.destroy();
-            //    createChart();
-            //    console.log("endaudio :" + Count_Audio_End)
 
-            //}
             if (audio.currentTime === 0 && !audio.paused && audio.loop) {
+
                 Count_Audio_End++;
-                if (chartAudioEnd.length == 0) {
+
+                if (resetChart) {
+
                     chartAudioEnd.push(Count_Audio_End);
+                    resetChart = false;
 
                 }
                 else {
-                    chartAudioEnd[0] = Count_Audio_End;
+                    chartAudioEnd[chartAudioEnd.length - 1] = Count_Audio_End;
                 }
-                line_chart.destroy();
-                createChart();
+                if (Count_Audio_End > 0) {
+                    line_chart.destroy();
+                    createChart();
+                }
                 console.log("Looped " + Count_Audio_End + " times.");
+
             }
 
         });
 
         pauseBtn.addEventListener("click", function () {
+
             Count_Audio_Pause++;
-            //if (Count_Audio_Pause <= 20) {
-            //    chartAudioPause.push(Count_Audio_Pause);
+
             if (chartAudioPause.length == 0) {
+
                 chartAudioPause.push(Count_Audio_Pause);
+                resetChart = false;
 
             }
-            else {
-                chartAudioPause[0] = Count_Audio_Pause;
-            }
-                line_chart.destroy();
-                createChart();
-                console.log("pauseaudio :" + Count_Audio_Pause)
-            /*}*/
+            chartAudioPause[chartAudioPause.length - 1] = Count_Audio_Pause;
+
+
+
+            line_chart.destroy();
+            createChart();
+
+            console.log("pauseaudio :" + Count_Audio_Pause)
+
 
 
         });
         retryBtn.addEventListener("click", function () {
+
+            audioSource.currentTime = 0;
+            audioSource.play();
             Count_Audio_Retry++;
-            //if (Count_Audio_Pause <= 20) {
-            //    chartAudioRetry.push(Count_Audio_Retry);
             if (chartAudioRetry.length == 0) {
+
+
                 chartAudioRetry.push(Count_Audio_Retry);
 
             }
-            else {
-                chartAudioRetry[0] = Count_Audio_Retry;
-            }
-                line_chart.destroy();
-                createChart();
-                console.log("retyaudio :" + Count_Audio_Retry)
-           /* }*/
+            chartAudioRetry[chartAudioRetry.length - 1] = Count_Audio_Retry;
+
+            line_chart.destroy();
+            createChart();
+
+            console.log("retyaudio :" + Count_Audio_Retry)
 
 
         });
         hintVisibleBtn.addEventListener("click", function () {
+
             Count_Audio_Hint++;
-            //if (Count_Audio_Pause <= 20) {
-            //    chartHint.push(Count_Audio_Hint);
             if (chartHint.length == 0) {
+
+
                 chartHint.push(Count_Audio_Hint);
 
+
             }
-            else {
-                chartHint[0] = Count_Audio_Hint;
-            }
-                line_chart.destroy();
-                createChart();
-                console.log("retyaudio :" + Count_Audio_Hint)
-           /* }*/
+            chartHint[chartHint.length - 1] = Count_Audio_Hint;
+
+
+            line_chart.destroy();
+            createChart();
+
+            console.log("retyaudio :" + Count_Audio_Hint)
+
 
 
         });
@@ -1206,16 +1244,35 @@
 
                     //vẽ lại chart
                     Count_Audio_Pause++;
-                    chartAudioPause[0] = Count_Audio_Pause;
-                   /* chartAudioPause.push(Count_Audio_Pause);*/
+                    /* chartAudioPause[0] = Count_Audio_Pause;*/
+                    chartAudioPause[chartAudioPause.length - 1] = Count_Audio_Pause;
+
                     line_chart.destroy();
                     createChart();
                 }
-
+                chartAudioPause[chartAudioPause.length - 1] = Count_Audio_Pause;
+                if (resetChart) {
+                    chartAudioPause.push(Count_Audio_Pause);
+                    chartAudioRetry.push(Count_Audio_Retry);
+                    chartHint.push(Count_Audio_Hint);
+                }
+                line_chart.destroy();
+                createChart();
             } else if (event.ctrlKey && event.code === "KeyM") {
                 audio.muted = !audio.muted;
             }
             else if (event.ctrlKey && event.code === "KeyZ") {
+
+                resetChart = true;
+                Count_Audio_Pause = 0;
+                Count_Audio_End = 0;
+                Count_Audio_Hint = 0;
+                Count_Audio_Retry = 0;
+                chartAudioPause.push(Count_Audio_Pause);
+                chartAudioRetry.push(Count_Audio_Retry);
+                chartHint.push(Count_Audio_Hint);
+
+
                 const levelLesson = document.getElementById("levelLesson").value;
                 //if (levelLesson == 1) {
                 //    document.getElementById("correctWord").value = "";
