@@ -123,7 +123,7 @@ namespace LWEnglishPractice.Controllers
                     h.IdlearnerNavigation.Image = item.Image;
                     h.Score = item.Scores;
                     OtherTops.Add(h);
-                    
+
                 }
                 TempData["OtherTops"] = OtherTops;
 
@@ -132,6 +132,50 @@ namespace LWEnglishPractice.Controllers
 
             return View(rankedResult);
 
+
+        }
+
+        public async Task<IActionResult> Statistics()
+        {
+
+            string employeeEmail = Request.Cookies["HienCaCookie"];
+            Learner learner = await _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefaultAsync();
+
+
+            var reusults = _context.Learner
+    .SelectMany(l => l.History, (l, h) => new { Learner = l, History = h })
+    .Join(_context.Lesson, lh => lh.History.Idlesson, l => l.Idlesson, (lh, l) => new { Learner = lh.Learner, Lesson = l, Score = lh.History.Score, his=lh.History })
+    .GroupBy(x => new { x.Learner.Idlearner, x.Learner.Fullname, x.his.Finishdate })
+    .Select(g => new
+    {
+        Finishdate = g.Key.Finishdate,
+        Fullname = g.Key.Fullname,
+        Idlearner = g.Key.Idlearner,
+        Scores = g.Sum(x => x.Score),
+
+    })
+    .OrderByDescending(x => x.Finishdate)
+    .ToList();
+            List<History> Results = new List<History>();
+            foreach (var item in reusults)
+            {
+                History h = new History();
+                h.IdlearnerNavigation = new Learner();
+                h.IdlearnerNavigation.Fullname = item.Fullname;
+                h.IdlearnerNavigation.Idlearner = item.Idlearner;
+                h.Finishdate = item.Finishdate;
+                h.Score = item.Scores;
+                //h.Idhistory = item.Idhistory;
+                Results.Add(h);
+            }
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            };
+            ViewBag.dataStatistics = JsonConvert.SerializeObject(Results, settings);
+
+            return View(Results);
 
         }
         public async Task<IActionResult> Index(int? id)

@@ -191,3 +191,4 @@ D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\bin\Debug\netcoreapp3.1\Microsoft.Extens
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Login\Login.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutIdentity.cshtml.g.cs
 D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Login\GetPassword.cshtml.g.cs
+D:\ĐH-08CNTT1\HienCa\LWEnglishPractice\obj\Debug\netcoreapp3.1\Razor\Views\Home\Statistics.cshtml.g.cs

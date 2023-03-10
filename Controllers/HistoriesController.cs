@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LWEnglishPractice.Entities;
+using System.Globalization;
 
 namespace LWEnglishPractice.Controllers
 {
@@ -33,7 +34,7 @@ namespace LWEnglishPractice.Controllers
                 string employeeEmail = Request.Cookies["HienCaCookie"];
                 Learner learner = _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefault();
 
-               
+
 
                 if (learner == null)
                 {
@@ -42,7 +43,11 @@ namespace LWEnglishPractice.Controllers
                 else
                 {
                     history.Idlearner = learner.Idlearner;
-                    history.Finishdate = DateTime.Now;
+                    //history.Finishtime = history.Finishtime;
+                   
+                    DateTime now = DateTime.Now;
+                    DateTime today = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+                    history.Finishdate = today;
                     History h = _context.History.Where(l => l.Idlesson == history.Idlesson).Where(l => l.Idlearner == learner.Idlearner).FirstOrDefault();
                     if (h == null)
                     {
@@ -57,13 +62,13 @@ namespace LWEnglishPractice.Controllers
 
                     }
                     await _context.SaveChangesAsync();
-                    return RedirectToAction("Learning","Home", new {@id=history.Idlesson });
+                    return RedirectToAction("Learning", "Home", new { @id = history.Idlesson });
                 }
 
             }
             catch
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Learning", "Home", new { @id = history.Idlesson });
 
             }
 

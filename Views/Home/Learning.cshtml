@@ -49,7 +49,15 @@
                             </span> LEARNING
                         </a>
                     </div>
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
 
+                        <a href="/Home/Statistics" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-house "></i>
+                            </span> STATISTICS
+                        </a>
+                    </div>
                     <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
 
                         <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
@@ -338,9 +346,9 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <form asp-action="CreateOrEdit" asp-controller="Histories">
-                                <input type="hidden" name="Idlesson" value="" /> @*do not have track*@
-                                <input type="hidden" name="Score" value="" id="" />
-                                <input type="hidden" name="Finishtime" value="" id="" />
+                                <input type="hidden" name="" value="" /> @*do not have track*@
+                                <input type="hidden" name="" value="" id="" />
+                                <input type="hidden" name="" value="" id="" />
                                 <button type="submit" class="border-0 btn" disabled id=""><i class="fas fa-save" style="font-size: 36px;"></i></button>
                             </form>
 
@@ -553,8 +561,8 @@
 
 
                 /*clearInterval(timerId);*/
-                x = counter;
-                y = DurationList.reduce((total, currentValue) => total + currentValue);
+                x = counter/60;
+                y = (DurationList.reduce((total, currentValue) => total + currentValue))/60;
                 console.log("x"+x);
                 console.log("y"+y);
                 scores = 10 * (11 - x / y);
@@ -896,7 +904,7 @@
         if (levelLesson == 1) {
 // lyrics need compare
 
-
+            //let compareString = 1;
             let currentIndex = 0;
             const input = document.getElementById('inputText');
             let countList = 0;
@@ -916,7 +924,7 @@
                     document.getElementById('correctWord').value = document.getElementById('correctWord').value + words[currentIndex] + " ";
                     document.getElementById('wrongWord').value = "";
                     currentIndex++;
-
+                    //compareString++;
                     if (currentIndex < words.length) {
                         //const nextWord = words[currentIndex];
                         if (/^[A-Z]/.test(words[currentIndex])) {
@@ -934,13 +942,20 @@
                         backBtn.disabled = false;
 
                     }
+
                 } else {
                     document.getElementById('wrongWord').value = inputValue;
                 }
+                
                 if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, currentWord.length-1))) {
                     input.value = "";
                     console.log("tttttt")
                 }
+                
+                //if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, compareString))) {
+                //    input.value = "";
+                //    console.log("tttttt")
+                //}
             });
 
         }
