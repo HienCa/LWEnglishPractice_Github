@@ -121,7 +121,9 @@ namespace LWEnglishPractice.Controllers
                     h.IdlearnerNavigation.Fullname = item.Fullname;
                     h.IdlearnerNavigation.Sex = item.Sex;
                     h.IdlearnerNavigation.Image = item.Image;
+                    h.Score = item.Scores;
                     OtherTops.Add(h);
+                    
                 }
                 TempData["OtherTops"] = OtherTops;
 

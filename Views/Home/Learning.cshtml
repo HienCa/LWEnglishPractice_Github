@@ -35,47 +35,49 @@
         <input type="hidden" value="@track.IdlessonNavigation.IdlevelNavigation.Level1" id="levelLesson" />
 
     }
-    <div class="row " style="width: 100vw; height: 100vh;">
-        <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center mt-5">
-            <h3>CVG ENGLISH</h3>
-            <div class="">
-                <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+    <div class="row " style="width: 100vw; height: 100vh; ">
+        <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center" style="background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: left; background-repeat: no-repeat; background-size: cover;">
+            <div class=" mt-5">
+                <h3>CVG ENGLISH</h3>
+                <div class="">
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
 
-                    <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
-                        <span style="font-size:32px; margin-right: 10px;">
+                        <a href="/Home/Index" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-house "></i>
+                            </span> LEARNING
+                        </a>
+                    </div>
+
+                    <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                        <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
+                            <span style="font-size:32px; margin-right: 10px;">
+                                <i style="color: #58CC02;"
+                                   class="fa-solid fa-ranking-star "></i>
+                            </span> RANKING
+
+                        </a>
+                </div>
+                <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+
+                    <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
                             <i style="color: #58CC02;"
-                               class="fa-solid fa-house "></i>
-                        </span> LEARNING
+                               class="fa-solid fa-user "></i>
+                        </span> PROIFILE
                     </a>
                 </div>
+                <div class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
 
-                <di id="rankingBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+                    <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
+                        <span style="font-size:32px; margin-right: 20px;">
 
-                    <a href="/Home/Ranking" style="text-decoration: none;" class="text-dark">
-                        <span style="font-size:32px; margin-right: 10px;">
-                            <i style="color: #58CC02;"
-                               class="fa-solid fa-ranking-star "></i>
-                        </span> RANKING
-
+                            <i style="color: red;" class="fa-solid fa-power-off"></i>
+                        </span> LOG OUT
                     </a>
-            </div>
-            <div id="profileBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
-
-                <a href="/Home/Profile" style="text-decoration: none;" class="text-dark">
-                    <span style="font-size:32px; margin-right: 20px;">
-                        <i style="color: #58CC02;"
-                           class="fa-solid fa-user "></i>
-                    </span> PROIFILE
-                </a>
-            </div>
-            <div class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
-
-                <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
-                    <span style="font-size:32px; margin-right: 20px;">
-
-                        <i style="color: red;" class="fa-solid fa-power-off"></i>
-                    </span> LOG OUT
-                </a>
+                </div>
             </div>
         </div>
         <div class="col-md-10 pb-5 border border-bottom-0 border-left-0 border-top-0 border-right"
@@ -221,7 +223,7 @@
                         {
                             <p id="hint"></p>
                         }
-                        <p id="audioText" class="bg bg-light boder rounded p-2 "></p>
+                        <p id="audioText" style="display:none" class="bg bg-light boder rounded p-2 "></p>
                         <audio controls loop id="myAudio" class="custom-controls w-100">
                             @*<source id="Source" src="~/Images/1-1.mp3" type="audio/mpeg">*@
                             <source id="mySource" src="" type="audio/mpeg">

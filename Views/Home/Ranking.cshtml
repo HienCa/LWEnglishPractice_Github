@@ -24,7 +24,7 @@
 
 
 <body>
-    <div class="row " style="width: 100vw; height: 100vh;">
+    <div class="row " style="width: 100vw; height: 100vh; background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
         <div class="col-md-2  mt-5">
             <h3 class="text-center">CVG ENGLISH</h3>
             <div class="">
@@ -73,9 +73,9 @@
                 <div class="container">
                     <div class="text-center mt-2 mb-2">
                         @*<img src="~/Images/medal.jpg" alt="goldMedal" style="width:15%;">*@
-                        <h3>LEARNING LEADERBOARD</h3>
+                        <h3 style="font-size:30px">LEARNING LEADERBOARD</h3>
                     </div>
-                    <div class="row text-center">
+                    <div class="row text-center" style="font-size:30px">
                         <div class="col-md-3">RANK</div>
                         <div class="col-md-2">SCORES</div>
                         <div class="col-md-4">NAME</div>
@@ -84,15 +84,15 @@
                     @if (TopOne != null)
                     {
                         <div class="row text-center align-items-center mt-3 rounded"
-                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #F2B724;">
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #F2B724; background-color:#fff">
                             <div class="col-md-3">
                                 <img src="~/Images/goldMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2" style="font-size:40px">
                                 @TopOne.Score
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="font-size:30px">
                                 @TopOne.IdlearnerNavigation.Fullname
                             </div>
                             <div class="col-md-3">
@@ -103,16 +103,16 @@
                     @if (TopTwo != null)
                     {
                         <div class="row text-center align-items-center mt-3 rounded"
-                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #A0A2A3;">
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #A0A2A3; background-color: #fff">
                             <div class="col-md-3">
 
                                 <img src="~/Images/silverMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2" style="font-size:40px">
                                 @TopTwo.Score
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="font-size:30px">
                                 @TopTwo.IdlearnerNavigation.Fullname
                             </div>
                             <div class="col-md-3">
@@ -123,16 +123,16 @@
                     @if (TopThree != null)
                     {
                         <div class="row text-center align-items-center mt-3 rounded"
-                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #CC885C;">
+                             style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border: 2px solid #CC885C; background-color: #fff">
                             <div class="col-md-3">
 
                                 <img src="~/Images/bronzeMedal.jpg" alt="goldMedal" style="width:50%;">
 
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2" style="font-size:40px">
                                 @TopThree.Score
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="font-size:30px">
                                 @TopThree.IdlearnerNavigation.Fullname
                             </div>
 
@@ -148,24 +148,33 @@
                         <div class="p-2" style="max-height: 40vh;overflow-y: scroll;">
                             @foreach (var item in OtherTops)
                             {
-                                <div class="row text-center align-items-center mt-4 rounded"
-                                     style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;max-height: 40vh;overflow-y: scroll;">
-                                    <div class="col-md-3">
-                                        @count
+                            <div class="row text-center align-items-center mt-4 rounded"
+                                 style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; max-height: 40vh; overflow-y: scroll; background-color: #fff">
+                                <div class="col-md-3" style="font-size:24px">
+                                    @count
 
-                                    </div>
-                                    <div class="col-md-2">
-                                        @item.Score
-                                    </div>
-                                    <div class="col-md-4">
-                                        @item.IdlearnerNavigation.Fullname
-                                    </div>
+                                </div>
+                                <div class="col-md-2" style="font-size:40px">
+                                    @item.Score
+                                </div>
+                                <div class="col-md-4 " style="font-size:30px">
+                                    @item.IdlearnerNavigation.Fullname
+                                </div>
 
+
+                                @if (@item.IdlearnerNavigation.Image != null)
+                                {
                                     <div class="col-md-3">
                                         <img src="~/Images/@item.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
                                     </div>
-
-                                </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-3">
+                                        <img src="~/Images/logo.jpg" alt="goldMedal" style="width:50%;">
+                                    </div>
+                                }
+                            </div>
                                 count++;
                             }
 

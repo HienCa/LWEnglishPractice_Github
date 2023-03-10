@@ -23,7 +23,7 @@
 
 
 <body>
-    <div class="row " style="width: 100vw; height: 100vh;">
+    <div class="row " style="width: 100vw; height: 100vh; background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
         <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center mt-5">
             <h3 class="text-center">CVG ENGLISH</h3>
             <div class="">
@@ -74,24 +74,70 @@
                         <div class="col-md-9">
                             @foreach (var item in Model)
                             {
-                                <div class="p-3 mt-2 text-white w-75 m-auto"
-                                     style="background-color: #58CC02; border-radius: 10px; position: relative;">
-                                    <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
-                                        <h5>Lesson Name: @item.Lessonanme</h5>
-                                        <p style="margin-bottom:0">Describe: @item.Describe</p>
-                                        <p>Level: @item.IdlevelNavigation.Level1</p>
-                                        @if (item.Datecreate != null)
-                                        {
-                                            DateTime Datecreate = (DateTime)item.Datecreate;
-                                            <span class="  text-center pl-2 pr-2"
-                                                  style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
-                                                <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
-                                            </span>
-                                        }
 
-                                    </a>
+                                @if (item.IdlevelNavigation.Level1 == 1)
+                                {
+                                    <div class="p-3 mt-2 text-white w-75 m-auto"
+                                         style="background-color: #58CC02; border-radius: 10px; position: relative;">
+                                        <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                            <h5>Lesson Name: @item.Lessonanme</h5>
+                                            <p style="margin-bottom:0">Describe: @item.Describe</p>
+                                            <p>Level: @item.IdlevelNavigation.Level1</p>
+                                            @if (item.Datecreate != null)
+                                            {
+                                                DateTime Datecreate = (DateTime)item.Datecreate;
+                                                <span class="  text-center pl-2 pr-2"
+                                                      style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                    <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
 
-                                </div>
+                                        </a>
+
+                                    </div>
+                                }
+                                else if (item.IdlevelNavigation.Level1 == 2)
+                                {
+                                    <div class="p-3 mt-2 text-white w-75 m-auto"
+                                         style="background-color: #ff8400d9; border-radius: 10px; position: relative;">
+                                        <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                            <h5>Lesson Name: @item.Lessonanme</h5>
+                                            <p style="margin-bottom:0">Describe: @item.Describe</p>
+                                            <p>Level: @item.IdlevelNavigation.Level1</p>
+                                            @if (item.Datecreate != null)
+                                            {
+                                                DateTime Datecreate = (DateTime)item.Datecreate;
+                                                <span class="  text-center pl-2 pr-2"
+                                                      style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                    <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
+
+                                        </a>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="p-3 mt-2 text-white w-75 m-auto"
+                                         style="background-color: #e30e0ed9; border-radius: 10px; position: relative;">
+                                        <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                            <h5>Lesson Name: @item.Lessonanme</h5>
+                                            <p style="margin-bottom:0">Describe: @item.Describe</p>
+                                            <p>Level: @item.IdlevelNavigation.Level1</p>
+                                            @if (item.Datecreate != null)
+                                            {
+                                                DateTime Datecreate = (DateTime)item.Datecreate;
+                                                <span class="  text-center pl-2 pr-2"
+                                                      style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                    <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
+
+                                        </a>
+
+                                    </div>
+                                }
                             }
 
                         </div>
@@ -117,14 +163,14 @@
                                 </div>
                                 <div class="rounded-circle mt-2" style="cursor: pointer;">
                                     <div class="rounded-circle "
-                                         style="background-color: #58CC02; width: 90px;  height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
+                                         style="background-color: #ff8400d9; width: 90px; height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
                                         <a href="/Home/Index/2" style="text-decoration:none; color:#fff">
 
                                             <span style="position: absolute;left: 7px; top:-5px; font-size: 50px; ">
                                                 <i class="fa-solid fa-star text-white"></i>
                                             </span>
                                             <span class="  text-center pl-2 pr-2"
-                                                  style="position: absolute;left: -15px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#58CC02; font-size:24px">
+                                                  style="position: absolute; left: -15px; top: 15px; font-weight: bold; min-width: 100px; border-radius: 20px; color: #ff8400d9; font-size: 24px ">
                                                 2
                                             </span>
                                         </a>
@@ -133,7 +179,7 @@
                                 </div>
                                 <div class="rounded-circle mt-2" style="cursor: pointer;">
                                     <div class="rounded-circle "
-                                         style="background-color: #58CC02; width: 90px;  height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
+                                         style="background-color: #e30e0ed9; width: 90px; height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
                                         <a href="/Home/Index/3" style="text-decoration:none; color:#fff">
 
                                             <span style="position: absolute;left: 7px; top:-5px; font-size: 50px; ">
@@ -142,7 +188,7 @@
 
                                             </span>
                                             <span class="  text-center pl-2 pr-2"
-                                                  style="position: absolute;left: -15px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#58CC02; font-size:24px">
+                                                  style="position: absolute; left: -15px; top: 15px; font-weight: bold; min-width: 100px; border-radius: 20px; color: #e30e0ed9; font-size: 24px">
                                                 3
                                             </span>
                                         </a>
