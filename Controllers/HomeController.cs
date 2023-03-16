@@ -141,11 +141,12 @@ namespace LWEnglishPractice.Controllers
             string employeeEmail = Request.Cookies["HienCaCookie"];
             Learner learner = await _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefaultAsync();
 
-            if(learner!=null){
+            if (learner != null)
+            {
                 var reusults = _context.Learner
     .SelectMany(l => l.History, (l, h) => new { Learner = l, History = h })
     .Join(_context.Lesson, lh => lh.History.Idlesson, l => l.Idlesson, (lh, l) => new { Learner = lh.Learner, Lesson = l, Score = lh.History.Score, his = lh.History })
-    .Where(l=>l.Learner.Idlearner==learner.Idlearner)
+    .Where(l => l.Learner.Idlearner == learner.Idlearner)
     .GroupBy(x => new { x.Learner.Idlearner, x.Learner.Fullname, x.his.Finishdate })
     .Select(g => new
     {
@@ -183,15 +184,31 @@ namespace LWEnglishPractice.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            
+
 
         }
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int? id, string? search)
         {
-            if (id != null)
+            if (id != null && search == null)
             {
 
                 var listenAndWriteContext = await _context.Lesson.Where(a => a.Active == 1).Include(l => l.IdlevelNavigation).Where(a => a.IdlevelNavigation.Level1.Equals(id)).ToListAsync();
+
+                return View(listenAndWriteContext);
+
+            }
+            else if (id != null && search != null )
+            {
+
+                var listenAndWriteContext = await _context.Lesson.Where(a => a.Active == 1).Where(n => n.Lessonanme.Contains(search)).Include(l => l.IdlevelNavigation).Where(a => a.IdlevelNavigation.Level1.Equals(id)).ToListAsync();
+
+                return View(listenAndWriteContext);
+
+            }
+            else if(id == null && search != null )
+            {
+
+                var listenAndWriteContext = await _context.Lesson.Where(a => a.Active == 1).Where(n => n.Lessonanme.Contains(search)).Include(l => l.IdlevelNavigation).ToListAsync();
 
                 return View(listenAndWriteContext);
 

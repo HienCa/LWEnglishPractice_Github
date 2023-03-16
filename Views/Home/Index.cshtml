@@ -25,7 +25,7 @@
 <body>
     <div class="row " style="width: 100vw; height: 100vh; background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
         <div class="col-md-2  border-bottom-0 border-top-0 border-right text-center mt-5">
-            <h3 class="text-center">CVG ENGLISH</h3>
+            <h3 class="text-center logoCVG">CVG ENGLISH</h3>
             <div class="">
                 <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
 
@@ -173,7 +173,7 @@
 
                         <div class="col-md-3">
                             @*<h3 class="text-center"> CHOOSE LEVEL</h3>*@
-                            <div class="row p-2 pt-4">
+                            <div class="row p-2 pt-4" style="position:fixed">
                                 <div class="rounded-circle " style="cursor: pointer;">
                                     <div class="rounded-circle "
                                          style="background-color: #58CC02; width: 90px;  height: 90px; position: relative; margin-left: 40%; border: 10px solid #E5E5E5">
@@ -224,6 +224,28 @@
 
                                     </div>
                                 </div>
+                                <div class="mt-2">
+                                    <form class="d-flex" role="search" asp-action="Index" asp-controller="Home" method="get">
+                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="@ViewBag.SearchText">
+                                        <input type="hidden" name="id" id="idSearchLesson" />
+                                        <script>
+                                            let href = window.location.href;
+
+                                            // Tạo đối tượng Location từ href
+                                            let locations = new URL(href);
+
+                                            // Lấy giá trị của pathname
+                                            let pathnames = locations.pathname;
+
+                                            // Tách chuỗi pathname để lấy giá trị cuối cùng (số 1)
+                                            let parts = pathnames.split('/');
+                                            let value = parts[parts.length - 1];
+                                            document.getElementById('idSearchLesson').value = value;
+                                        </script>
+                                        <button class="btn btn-outline-success" type="submit">Search</button>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>

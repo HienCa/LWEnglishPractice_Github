@@ -7,7 +7,14 @@
   box-sizing: border-box;
   font-family: 'Popins', sans-serif;
 }
-
+.logoCVG {
+    font-family: 'Steak';
+    background: linear-gradient(#00F260, #0575E6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 40px;
+    font-weight: bolder;
+}
 .sidebar:hover {
   background-color: #F7F7F7;
   cursor: pointer;
