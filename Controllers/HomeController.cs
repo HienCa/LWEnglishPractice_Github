@@ -141,10 +141,11 @@ namespace LWEnglishPractice.Controllers
             string employeeEmail = Request.Cookies["HienCaCookie"];
             Learner learner = await _context.Learner.Where(nv => nv.Email == employeeEmail).FirstOrDefaultAsync();
 
-
-            var reusults = _context.Learner
+            if(learner!=null){
+                var reusults = _context.Learner
     .SelectMany(l => l.History, (l, h) => new { Learner = l, History = h })
-    .Join(_context.Lesson, lh => lh.History.Idlesson, l => l.Idlesson, (lh, l) => new { Learner = lh.Learner, Lesson = l, Score = lh.History.Score, his=lh.History })
+    .Join(_context.Lesson, lh => lh.History.Idlesson, l => l.Idlesson, (lh, l) => new { Learner = lh.Learner, Lesson = l, Score = lh.History.Score, his = lh.History })
+    .Where(l=>l.Learner.Idlearner==learner.Idlearner)
     .GroupBy(x => new { x.Learner.Idlearner, x.Learner.Fullname, x.his.Finishdate })
     .Select(g => new
     {
@@ -156,26 +157,33 @@ namespace LWEnglishPractice.Controllers
     })
     .OrderByDescending(x => x.Finishdate)
     .ToList();
-            List<History> Results = new List<History>();
-            foreach (var item in reusults)
-            {
-                History h = new History();
-                h.IdlearnerNavigation = new Learner();
-                h.IdlearnerNavigation.Fullname = item.Fullname;
-                h.IdlearnerNavigation.Idlearner = item.Idlearner;
-                h.Finishdate = item.Finishdate;
-                h.Score = item.Scores;
-                //h.Idhistory = item.Idhistory;
-                Results.Add(h);
-            }
-            var settings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Formatting = Formatting.Indented
-            };
-            ViewBag.dataStatistics = JsonConvert.SerializeObject(Results, settings);
+                List<History> Results = new List<History>();
+                foreach (var item in reusults)
+                {
+                    History h = new History();
+                    h.IdlearnerNavigation = new Learner();
+                    h.IdlearnerNavigation.Fullname = item.Fullname;
+                    h.IdlearnerNavigation.Idlearner = item.Idlearner;
+                    h.Finishdate = item.Finishdate;
+                    h.Score = item.Scores;
+                    //h.Idhistory = item.Idhistory;
+                    Results.Add(h);
+                }
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    Formatting = Formatting.Indented
+                };
+                ViewBag.dataStatistics = JsonConvert.SerializeObject(Results, settings);
 
-            return View(Results);
+                return View(Results);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            
 
         }
         public async Task<IActionResult> Index(int? id)

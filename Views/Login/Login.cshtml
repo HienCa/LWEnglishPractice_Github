@@ -29,7 +29,7 @@
             <input class="d-none" value="login" name="login" />
 
             <div class="field">
-                <input autofocus type="text" name="Email" id="emailLogin" >
+                <input autofocus type="text" name="Email" id="emailLogin">
                 <label for="email">Email Address</label>
                 <span class="text-danger" id="checkEmailLogin"></span>
 
@@ -55,18 +55,18 @@
 
             </div>
             <div class="field">
-                
+
                 <input type="submit" value="Login">
             </div>
             <div class="signup-link">
                 @*<div class="link-social">
-                    <p>Or SignUp Using</p>
-                    <div class="icon ">
-                        <i class="fab fa-facebook"></i>
-                        <i class="fab fa-twitter"></i>
-                        <i class="fab fa-google-plus"></i>
-                    </div>
-                </div>*@
+                        <p>Or SignUp Using</p>
+                        <div class="icon ">
+                            <i class="fab fa-facebook"></i>
+                            <i class="fab fa-twitter"></i>
+                            <i class="fab fa-google-plus"></i>
+                        </div>
+                    </div>*@
                 <div class="link-signup">
                     <p>Or SignUp Using</p>
                     <button id="btn-signupForward" class="btn border-0 text-primary">Sign Up</button>
@@ -82,7 +82,7 @@
         <form id="register-form" asp-action="Register" asp-controller="Login" method="post" onsubmit="return checkSignup()">
             <input class="d-none" value="signup" name="signup" />
             <div class="field">
-                <input autofocus type="text" name="Email" id="email" >
+                <input autofocus type="text" name="Email" id="email">
                 <label for="email">Email Address</label>
                 @if (TempData["existEmail"] != null)
                 {
@@ -93,13 +93,13 @@
 
             </div>
             <div class="field">
-                <input type="password" name="Password" id="password" >
+                <input type="password" name="Password" id="password">
                 <label for="password">Password</label>
                 <span class="text-danger" id="checkPassword"></span>
 
             </div>
             <div class="field">
-                <input type="password" name="confirmPassword" id="confirmPassword" >
+                <input type="password" name="confirmPassword" id="confirmPassword">
                 <label for="password">Retype Password</label>
                 <span class="text-danger" id="checkConfirmPassword"></span>
 
@@ -299,6 +299,20 @@
             });
 
         </script>*@
+
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
+    </script>
 </body>
 
 </html>

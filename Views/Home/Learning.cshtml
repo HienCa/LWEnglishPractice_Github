@@ -946,12 +946,12 @@
                 } else {
                     document.getElementById('wrongWord').value = inputValue;
                 }
-                
+
                 if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, currentWord.length-1))) {
                     input.value = "";
                     console.log("tttttt")
                 }
-                
+
                 //if (!((document.getElementById('wrongWord').value) === (inputValue.toLowerCase()).substring(0, compareString))) {
                 //    input.value = "";
                 //    console.log("tttttt")
@@ -1328,6 +1328,20 @@
                 audio.play();
             }
         });
+    </script>
+
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
     </script>
 </body>
 

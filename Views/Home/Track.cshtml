@@ -20,7 +20,7 @@
             <h3 class="mt-5"> CVG ENGLISH</h3>
             <div class="">
                 <div class="">
-                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0"  style="background-color: #DDF4FF;border: 2px solid #84D8FF;">
+                    <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-5 pt-0 pb-0" style="background-color: #DDF4FF;border: 2px solid #84D8FF;">
                         <span style="font-size:32px; margin-right: 10px;">
                             <i style="color: #58CC02;"
                                class="fa-solid fa-house "></i>
@@ -106,6 +106,19 @@
 
 
 
+
+    </script>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
 
     </script>
 </body>

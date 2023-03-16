@@ -24,7 +24,7 @@
 
 <body>
     <div class="row " style="width: 100vw; height: 100vh; background-image: url('https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/11/23173331/Best-Books-for-GRE.png'); background-position: center; background-repeat: no-repeat; background-size: cover; ">
-        <div class="col-md-2 border border-bottom-0 border-top-0 border-right text-center mt-5">
+        <div class="col-md-2  border-bottom-0 border-top-0 border-right text-center mt-5">
             <h3 class="text-center">CVG ENGLISH</h3>
             <div class="">
                 <div id="homeBtn" class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
@@ -103,6 +103,27 @@
                                         </a>
 
                                     </div>
+                                    @*<div class="row">
+                                        <div class="col-md-4 col-sm-2">
+                                            <div class="card" style="width: 18rem;">
+                                                <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                                    <img src="~/Images/logo.jpg" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">@item.Lessonanme</h5>
+                                                        <p class="card-text">@item.Describe</p>
+                                                        @if (item.Datecreate != null)
+                                                        {
+                                                            DateTime Datecreate = (DateTime)item.Datecreate;
+                                                            <span class="  text-center pl-2 pr-2"
+                                                                  style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                                <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>*@
                                 }
                                 else if (item.IdlevelNavigation.Level1 == 2)
                                 {
@@ -439,6 +460,20 @@
 
         editProfileBtn.addEventListener("click", function () {
             toggleDiv(editProfileForm);
+        });
+
+    </script>
+
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
         });
 
     </script>

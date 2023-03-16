@@ -18,7 +18,7 @@
 <body class="bg-light w-25 m-auto mt-5">
     <div class="">
 
-        
+
         @RenderBody()
     </div>
 
@@ -28,6 +28,19 @@
         VirtualSelect.init({
             ele: 'select'
         });
+    </script>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
     </script>
 </body>
 </html>

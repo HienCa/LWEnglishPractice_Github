@@ -156,33 +156,33 @@
                         <div class="p-2" style="max-height: 40vh;overflow-y: scroll;">
                             @foreach (var item in OtherTops)
                             {
-                            <div class="row text-center align-items-center mt-4 rounded"
-                                 style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; max-height: 40vh; overflow-y: scroll; background-color: #fff">
-                                <div class="col-md-3" style="font-size:24px">
-                                    @count
+                                <div class="row text-center align-items-center mt-4 rounded"
+                                     style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; max-height: 40vh; overflow-y: scroll; background-color: #fff">
+                                    <div class="col-md-3" style="font-size:24px">
+                                        @count
 
-                                </div>
-                                <div class="col-md-2" style="font-size:40px">
-                                    @item.Score
-                                </div>
-                                <div class="col-md-4 " style="font-size:30px">
-                                    @item.IdlearnerNavigation.Fullname
-                                </div>
-
-
-                                @if (@item.IdlearnerNavigation.Image != null)
-                                {
-                                    <div class="col-md-3">
-                                        <img src="~/Images/@item.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
                                     </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-3">
-                                        <img src="~/Images/logo.jpg" alt="goldMedal" style="width:50%;">
+                                    <div class="col-md-2" style="font-size:40px">
+                                        @item.Score
                                     </div>
-                                }
-                            </div>
+                                    <div class="col-md-4 " style="font-size:30px">
+                                        @item.IdlearnerNavigation.Fullname
+                                    </div>
+
+
+                                    @if (@item.IdlearnerNavigation.Image != null)
+                                    {
+                                        <div class="col-md-3">
+                                            <img src="~/Images/@item.IdlearnerNavigation.Image" alt="goldMedal" style="width:50%;">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3">
+                                            <img src="~/Images/logo.jpg" alt="goldMedal" style="width:50%;">
+                                        </div>
+                                    }
+                                </div>
                                 count++;
                             }
 
@@ -318,6 +318,19 @@
 
         editProfileBtn.addEventListener("click", function () {
             toggleDiv(editProfileForm);
+        });
+
+    </script>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
         });
 
     </script>

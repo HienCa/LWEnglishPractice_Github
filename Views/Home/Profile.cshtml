@@ -215,7 +215,7 @@
                         <form id="secondForm" asp-action="EditPersonalInformation" asp-controller="Learners" onsubmit="return secondForm()">
                             <input type="hidden" name="Idlearner" value="@Model.Idlearner" class="form-control">
                             <input type="hidden" name="Email" value="@Model.Email" class="form-control">
-                            <input type="hidden" id="Password"  value="@Model.Password" class="form-control">
+                            <input type="hidden" id="Password" value="@Model.Password" class="form-control">
                             <input type="hidden" name="Joindate" value="@Model.Joindate" class="form-control">
                             <input type="hidden" name="Image" value="@Model.Image" class="form-control">
                             <input type="hidden" name="Sex" value="@Model.Sex" class="form-control">
@@ -302,12 +302,12 @@
         changeImage.addEventListener("change", function () {
             let tim;
             tim = setTimeout(function () {
-                
+
                 console.log("successful...");
             }, 500);
             clearTimeout(tim);
             formChangeImage.submit();
-            
+
         })
 
         const checkFullname = document.getElementById("checkFullname");
@@ -361,6 +361,19 @@
                 checkCurrentPassword.style.color = "green";
             }
         };
+    </script>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf('HienCaCookie=') === 0) {
+                    document.cookie = "hienca=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    break;
+                }
+            }
+        });
+
     </script>
 </body>
 
