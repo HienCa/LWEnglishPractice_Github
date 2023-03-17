@@ -48,7 +48,7 @@
                         <a href="/Home/Statistics" style="text-decoration: none;" class="text-dark">
                             <span style="font-size:32px; margin-right: 10px;">
                                 <i style="color: #58CC02;"
-                                   class="fa-solid fa-house "></i>
+                                   class="fas fa-chart-bar "></i>
                             </span> STATISTICS
                         </a>
                     </div>
@@ -98,6 +98,62 @@
                         @*//chart*@
                         <canvas id="linechartDay" class="w-100" style="max-height: 50vh;"></canvas>
                     </div>
+
+                    @if (ViewBag.StatisticByDay != null)
+                    {
+                        <div class=" text-right">
+                            <span style=" display:block;font-size:40px;text-align:right;cursor:pointer" id="caretDownIcon"><i class="fa-solid fa-caret-down"></i></span>
+                            <span style=" display: none; font-size: 40px; text-align: right; cursor: pointer" id="caretUpIcon"><i class="fa-solid fa-caret-up"></i></span>
+                        </div>
+                        <div class="mt-2 container fade" style="position:relative; display:none" id="statistic-detail">
+
+
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Level</th>
+                                        <th scope="col">Lesson Name</th>
+                                        <th scope="col">Scores</th>
+                                        <th scope="col">Finish Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    @{
+                                        int i = 1;
+
+                                    }
+                                    @foreach (var item in ViewBag.StatisticByDay as List<History>)
+                                    {
+
+                                        <tr>
+                                            <th scope="row">@i</th>
+                                            <td>@item.IdlessonNavigation.IdlevelNavigation.Levelname</td>
+                                            <td>@item.IdlessonNavigation.Lessonanme</td>
+                                            <td>@item.Score</td>
+
+                                            @if (item.Finishdate != null)
+                                            {
+                                                DateTime Finishdate = (DateTime)item.Finishdate;
+                                                <td>@Finishdate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+
+                                        </tr>
+
+                                        i = i + 1;
+
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    }
 
                     <div class="mt-5">
                         @*//chart*@
@@ -312,6 +368,36 @@
                 }
             }
         });
+
+    </script>
+
+
+    <script>
+
+        let myDiv = document.getElementById("statistic-detail");
+        let caretUpIcon = document.getElementById("caretUpIcon");
+        let caretDownIcon = document.getElementById("caretDownIcon");
+
+
+        caretDownIcon.addEventListener("click", function () {
+            if (myDiv.style.display === "none") {
+                myDiv.style.display = "block";
+                caretUpIcon.style.display = "block";
+                caretDownIcon.style.display = "none";
+
+            }
+        });
+
+        caretUpIcon.addEventListener("click", function () {
+            if (myDiv.style.display === "block") {
+                myDiv.style.display = "none";
+                caretUpIcon.style.display = "none";
+                caretDownIcon.style.display = "block";
+
+            }
+        });
+
+
 
     </script>
 </body>

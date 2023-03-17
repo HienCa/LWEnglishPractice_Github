@@ -177,6 +177,9 @@ namespace LWEnglishPractice.Controllers
                 };
                 ViewBag.dataStatistics = JsonConvert.SerializeObject(Results, settings);
 
+
+                ViewBag.StatisticByDay = await _context.History.Where(l => l.Idlearner == learner.Idlearner).Include(ln=>ln.IdlearnerNavigation).Include(les => les.IdlessonNavigation).Include(les => les.IdlessonNavigation.IdlevelNavigation).ToListAsync();
+
                 return View(Results);
             }
             else
