@@ -178,7 +178,7 @@ namespace LWEnglishPractice.Controllers
                 ViewBag.dataStatistics = JsonConvert.SerializeObject(Results, settings);
 
 
-                ViewBag.StatisticByDay = await _context.History.Where(l => l.Idlearner == learner.Idlearner).Include(ln=>ln.IdlearnerNavigation).Include(les => les.IdlessonNavigation).Include(les => les.IdlessonNavigation.IdlevelNavigation).ToListAsync();
+                ViewBag.StatisticByDay = await _context.History.Where(l => l.Idlearner == learner.Idlearner).Include(ln => ln.IdlearnerNavigation).Include(les => les.IdlessonNavigation).Include(les => les.IdlessonNavigation.IdlevelNavigation).ToListAsync();
 
                 return View(Results);
             }
@@ -200,7 +200,7 @@ namespace LWEnglishPractice.Controllers
                 return View(listenAndWriteContext);
 
             }
-            else if (id != null && search != null )
+            else if (id != null && search != null)
             {
 
                 var listenAndWriteContext = await _context.Lesson.Where(a => a.Active == 1).Where(n => n.Lessonanme.Contains(search)).Include(l => l.IdlevelNavigation).Where(a => a.IdlevelNavigation.Level1.Equals(id)).ToListAsync();
@@ -208,7 +208,7 @@ namespace LWEnglishPractice.Controllers
                 return View(listenAndWriteContext);
 
             }
-            else if(id == null && search != null )
+            else if (id == null && search != null)
             {
 
                 var listenAndWriteContext = await _context.Lesson.Where(a => a.Active == 1).Where(n => n.Lessonanme.Contains(search)).Include(l => l.IdlevelNavigation).ToListAsync();
@@ -271,24 +271,33 @@ namespace LWEnglishPractice.Controllers
             Learner l = _context.Learner.Where(tk => tk.Email.Equals(account.Email)).Where(tk => tk.Password.Equals(account.Password)).FirstOrDefault();
             if (l != null)
             {
-                Response.Cookies.Append("HienCaCookie", l.Email);
-                List<Claim> claims = new List<Claim>()
+                if (l.Email.Equals("nguyenvanhien050601@gmail.com"))
+                {
+                    return RedirectToAction("Index", "Lessons");
+
+                }
+                else
+                {
+                    Response.Cookies.Append("HienCaCookie", l.Email);
+                    List<Claim> claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.NameIdentifier, l.Email),
                     new Claim("OtherProperties", "Example Role")
                 };
-                ClaimsIdentity claimIdentity = new ClaimsIdentity(claims,
-                    CookieAuthenticationDefaults.AuthenticationScheme);
-                AuthenticationProperties properties = new AuthenticationProperties()
-                {
-                    AllowRefresh = true,
-                    IsPersistent = account.KeepLoggedIn
-                };
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimIdentity), properties);
+                    ClaimsIdentity claimIdentity = new ClaimsIdentity(claims,
+                        CookieAuthenticationDefaults.AuthenticationScheme);
+                    AuthenticationProperties properties = new AuthenticationProperties()
+                    {
+                        AllowRefresh = true,
+                        IsPersistent = account.KeepLoggedIn
+                    };
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimIdentity), properties);
 
 
-                return RedirectToAction("Learning", "Home");
+                    return RedirectToAction("Learning", "Home");
+                }
+
 
             }
             else

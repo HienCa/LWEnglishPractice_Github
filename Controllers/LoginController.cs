@@ -24,7 +24,7 @@ namespace LWEnglishPractice.Controllers
         public LoginController(ListenAndWriteContext context)
         {
             _context = context;
-          
+
         }
         //public LoginController(
         //    UserManager<ApplicationUser> userManager,
@@ -71,6 +71,8 @@ namespace LWEnglishPractice.Controllers
                 Learner l = _context.Learner.Where(tk => tk.Email.Equals(model.Email)).Where(tk => tk.Password.Equals(model.Password)).FirstOrDefault();
                 if (l != null)
                 {
+
+
                     Response.Cookies.Append("HienCaCookie", l.Email);
                     List<Claim> claims = new List<Claim>()
                 {
@@ -87,9 +89,15 @@ namespace LWEnglishPractice.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimIdentity), properties);
 
+                    if (l.Email.Equals("admin@gmail.com"))
+                    {
+                        return RedirectToAction("Index", "Lessons");
 
-                    return RedirectToAction("Index", "Home");
-
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
@@ -104,7 +112,7 @@ namespace LWEnglishPractice.Controllers
             }
         }
 
-        
+
         public async Task<IActionResult> Logout()
         {
             if (Request.Cookies["HienCaCookie"] != null)
@@ -155,7 +163,7 @@ namespace LWEnglishPractice.Controllers
             try
             {
                 Learner checkLearner = _context.Learner.Where(nv => nv.Email == model.Email).FirstOrDefault();
-                if(checkLearner == null)
+                if (checkLearner == null)
                 {
                     Learner learner = new Learner();
                     learner.Email = model.Email;
@@ -165,7 +173,7 @@ namespace LWEnglishPractice.Controllers
                     learner.Sex = "Khác";
                     _context.Learner.Add(learner);
                     await _context.SaveChangesAsync();
-                   
+
                 }
                 else
                 {
@@ -221,7 +229,7 @@ namespace LWEnglishPractice.Controllers
                     learner.Password = newPassword;
                     mailContent.To = learner.Email;
                 }
-                
+
                 else
                 {
                     ViewData["errorMessage"] = errorMessage;

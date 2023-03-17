@@ -19,6 +19,7 @@ namespace LWEnglishPractice.Controllers
         }
 
         // GET: Lessons
+
         public async Task<IActionResult> Index()
         {
             var listenAndWriteContext = _context.Lesson.Include(l => l.IdlevelNavigation);

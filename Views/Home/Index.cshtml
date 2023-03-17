@@ -64,13 +64,22 @@
                     </span> PROIFILE
                 </a>
             </div>
-            <div class="d-flex align-items-center rounded-3 sidebar p-4 pt-0 pb-0">
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="NoCookieName" style="display:none">
 
                 <a href="/Login/Logout" style="text-decoration: none;" class="text-dark">
                     <span style="font-size:32px; margin-right: 20px;">
 
                         <i style="color: red;" class="fa-solid fa-power-off"></i>
                     </span> LOG OUT
+                </a>
+            </div>
+            <div class=" align-items-center rounded-3 sidebar p-4 pt-0 pb-0" id="HascookieName" style="display:none">
+
+                <a href="/Login/Login" style="text-decoration: none;" class="text-dark">
+                    <span style="font-size:32px; margin-right: 20px;">
+
+                        <i style="color: #58CC02;" class="fas fa-user-circle"></i>
+                    </span> LOG IN
                 </a>
             </div>
         </div>
@@ -104,26 +113,26 @@
 
                                     </div>
                                     @*<div class="row">
-                                        <div class="col-md-4 col-sm-2">
-                                            <div class="card" style="width: 18rem;">
-                                                <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
-                                                    <img src="~/Images/logo.jpg" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">@item.Lessonanme</h5>
-                                                        <p class="card-text">@item.Describe</p>
-                                                        @if (item.Datecreate != null)
-                                                        {
-                                                            DateTime Datecreate = (DateTime)item.Datecreate;
-                                                            <span class="  text-center pl-2 pr-2"
-                                                                  style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
-                                                                <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
-                                                            </span>
-                                                        }
-                                                    </div>
-                                                </a>
+                                            <div class="col-md-4 col-sm-2">
+                                                <div class="card" style="width: 18rem;">
+                                                    <a href="/Home/Learning/@item.Idlesson" style="text-decoration:none; color:#fff">
+                                                        <img src="~/Images/logo.jpg" class="card-img-top" alt="...">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">@item.Lessonanme</h5>
+                                                            <p class="card-text">@item.Describe</p>
+                                                            @if (item.Datecreate != null)
+                                                            {
+                                                                DateTime Datecreate = (DateTime)item.Datecreate;
+                                                                <span class="  text-center pl-2 pr-2"
+                                                                      style="position: absolute;right: 10px; top: 15px;font-weight: bold; min-width: 100px;  border-radius: 20px; color:#fff;">
+                                                                    <i class="fas fa-clock"></i> Upload Date: @Datecreate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                                                </span>
+                                                            }
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>*@
+                                        </div>*@
                                 }
                                 else if (item.IdlevelNavigation.Level1 == 2)
                                 {
@@ -515,6 +524,32 @@
                 }
             }
         });
+
+    </script>
+
+    <script>
+
+        const myCookie = getCookie('HienCaCookie');
+        if (myCookie != null) {
+            document.getElementById("NoCookieName").style.display = "flex";
+        } else {
+            document.getElementById("HascookieName").style.display = "flex";
+
+        }
+
+        function getCookie(name) {
+            const cookieString = document.cookie;
+            const cookies = cookieString.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+
 
     </script>
 </body>
